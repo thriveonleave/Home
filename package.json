@@ -5,3 +5,22 @@
     "@notionhq/client": "^2.2.15"
   }
 }
+function handleHeroFullSignup() {
+  const emailEl = document.getElementById('heroEmail');
+  const email = emailEl ? emailEl.value.trim() : '';
+  if (!email || !email.includes('@')) {
+    showToast('Please enter a valid email address.');
+    return;
+  }
+  handleSubscribe({
+    firstName: document.getElementById('heroFirst')?.value.trim() || '',
+    email: email,
+    neighborhood: document.getElementById('heroNeighborhood')?.value || '',
+    subscriberType: document.getElementById('heroType')?.value || '',
+    source: 'hero'
+  });
+  ['heroFirst','heroEmail','heroNeighborhood','heroType'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+}
