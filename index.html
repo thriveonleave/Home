@@ -450,17 +450,54 @@ nav { padding:0 28px; }
       <p class="hero-tagline">For the mother in the thick of early motherhood —<br/><span style="font-style:normal;color:#C9A84C;font-family:'Cormorant Garamond',serif;font-size:inherit;">a gentle invitation back to yourself.</span></p>
       <p class="hero-sub">Community · Culture · Intentional Moments · Los Angeles</p>
       <div class="hero-embed-wrap">
-        <div class="hero-form-box">
-          <div class="hero-form-row">
-            <input type="email" id="heroEmail" placeholder="Your email address" onkeydown="if(event.key==='Enter')handleHeroSignup()"/>
-            <button onclick="handleHeroSignup()">Join Free →</button>
-          </div>
-          <p style="font-family:'Jost',sans-serif;font-size:9.5px;color:rgba(201,168,76,.5);text-align:center;margin-top:12px;">Weekly. Curated. Always free. Unsubscribe any time.</p>
-        </div>
+  <div class="hero-form-box" style="padding:28px 32px;max-width:520px;width:100%;">
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div>
+        <label style="display:block;font-family:'Jost',sans-serif;font-size:9px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:#C9A84C;margin-bottom:8px;">First Name</label>
+        <input id="heroFirst" type="text" placeholder="Your first name"
+          style="width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(201,168,76,.35);padding:13px 16px;font-family:'Jost',sans-serif;font-size:13px;color:#E8D5A3;outline:none;"/>
       </div>
+      <div>
+        <label style="display:block;font-family:'Jost',sans-serif;font-size:9px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:#C9A84C;margin-bottom:8px;">Email Address</label>
+        <input id="heroEmail" type="email" placeholder="your@email.com"
+          style="width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(201,168,76,.35);padding:13px 16px;font-family:'Jost',sans-serif;font-size:13px;color:#E8D5A3;outline:none;"/>
+      </div>
+      <div>
+        <label style="display:block;font-family:'Jost',sans-serif;font-size:9px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:#C9A84C;margin-bottom:8px;">Neighborhood</label>
+        <select id="heroNeighborhood"
+          style="width:100%;background:rgba(10,22,40,.95);border:1px solid rgba(201,168,76,.35);padding:13px 16px;font-family:'Jost',sans-serif;font-size:13px;color:#E8D5A3;outline:none;appearance:none;">
+          <option value="" disabled selected>Select your area of LA</option>
+          <option value="West Side">West Side (Santa Monica, Venice, Culver City)</option>
+          <option value="East Side">East Side (Silver Lake, Los Feliz, Echo Park)</option>
+          <option value="South Bay">South Bay (Manhattan Beach, Redondo, Torrance)</option>
+          <option value="Valley">Valley (Sherman Oaks, Studio City, Encino)</option>
+          <option value="Central">Central (Koreatown, Mid-City, Baldwin Hills)</option>
+          <option value="DTLA">Eastside (DTLA, Arts District, Boyle Heights)</option>
+          <option value="All of LA">Other / All of LA</option>
+        </select>
+      </div>
+      <div>
+        <label style="display:block;font-family:'Jost',sans-serif;font-size:9px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:#C9A84C;margin-bottom:8px;">I Am A...</label>
+        <select id="heroType"
+          style="width:100%;background:rgba(10,22,40,.95);border:1px solid rgba(201,168,76,.35);padding:13px 16px;font-family:'Jost',sans-serif;font-size:13px;color:#E8D5A3;outline:none;appearance:none;">
+          <option value="" disabled selected>Select one</option>
+          <option value="Mom of littles (0–5)">Mom of littles (0–5)</option>
+          <option value="Mom of school-age kids (6–12)">Mom of school-age kids (6–12)</option>
+          <option value="Career woman & mom">Career woman & mom</option>
+          <option value="Entrepreneur & mom">Entrepreneur & mom</option>
+          <option value="Soon-to-be mom">Soon-to-be mom</option>
+          <option value="Aligned woman & supporter">Aligned woman & supporter</option>
+        </select>
+      </div>
+      <button onclick="handleHeroFullSignup()"
+        style="background:#C9A84C;border:none;padding:16px;font-family:'Jost',sans-serif;font-size:10px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:#0A1628;cursor:pointer;width:100%;margin-top:4px;">
+        Join Free →
+      </button>
+      <p style="font-family:'Jost',sans-serif;font-size:9.5px;color:rgba(201,168,76,.5);text-align:center;">Weekly. Curated. Always free. Unsubscribe any time.</p>
     </div>
-    <div class="scroll-hint"><span>Explore</span><div class="scroll-dot"></div></div>
-  </section>
+  </div>
+</div>
+
 
   <!-- Pillars -->
 
