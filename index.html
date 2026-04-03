@@ -5,396 +5,291 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Thrive on Leave — Los Angeles</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet"/>
 <style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Jost','Helvetica Neue',Arial,sans-serif;font-weight:300;background:#FFFDF8;color:#3A3028;overflow-x:hidden;}
 
-/* ── RESET ── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+/* ── PAGES ── */
+.page{display:none;min-height:100vh;}
+.page.active{display:block;}
 
-/* ── TOKENS (kept for reference but all critical rules use hex) ── */
-:root {
-–gold:      #C9A84C;
-–gold-lt:   #E8D5A3;
-–gold-pale: #F7F0E4;
-–navy:      #0A1628;
-–navy-dark: #071020;
-–blush:     #F5EDE3;
-–blush-2:   #EDD9C8;
-–cream:     #FFFDF8;
-–text:      #3A3028;
-–text-mid:  #6B5E52;
-–text-lt:   #9A8E84;
-–ease-out:  cubic-bezier(0.16, 1, 0.3, 1);
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:0 52px;height:72px;background:#0A1628;border-bottom:1px solid rgba(201,168,76,.2);}
+.nav-logo{font-family:‘Cormorant Garamond’,Georgia,serif;font-size:18px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:#E8D5A3;cursor:pointer;text-decoration:none;}
+.nav-logo span{color:#C9A84C;font-style:italic;}
+.nav-links{display:flex;gap:36px;align-items:center;list-style:none;}
+.nav-links a{font-family:‘Jost’,sans-serif;font-size:10px;font-weight:400;letter-spacing:3px;text-transform:uppercase;color:rgba(232,213,163,.65);text-decoration:none;cursor:pointer;transition:color .3s;position:relative;}
+.nav-links a::after{content:’’;position:absolute;bottom:-4px;left:0;right:0;height:1px;background:#C9A84C;transform:scaleX(0);transform-origin:left;transition:transform .3s;}
+.nav-links a:hover,.nav-links a.active{color:#E8D5A3;}
+.nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1);}
+.nav-cta{border:1px solid #C9A84C !important;padding:9px 20px !important;color:#C9A84C !important;letter-spacing:2.5px !important;transition:background .3s,color .3s !important;}
+.nav-cta:hover{background:#C9A84C !important;color:#0A1628 !important;}
+.nav-cta::after{display:none !important;}
+.nav-toggle{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;}
+.nav-toggle span{display:block;width:22px;height:1px;background:#C9A84C;}
+
+/* ── SHARED ── */
+.section-eyebrow{font-family:‘Jost’,sans-serif;font-size:9px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:#C9A84C;margin-bottom:20px;display:flex;align-items:center;gap:14px;}
+.section-eyebrow::before{content:’’;width:28px;height:1px;background:#C9A84C;opacity:.5;}
+.section-title{font-family:‘Cormorant Garamond’,Georgia,serif;font-size:clamp(32px,3.5vw,52px);font-weight:400;color:#0A1628;line-height:1.15;margin-bottom:24px;}
+.section-title em{font-style:italic;color:#C9A84C;}
+.section-body{font-family:‘Cormorant Garamond’,Georgia,serif;font-size:18px;font-weight:300;line-height:1.85;color:#6B5E52;margin-bottom:16px;}
+.btn-outline{display:inline-block;margin-top:24px;border:1px solid #0A1628;padding:13px 28px;font-family:‘Jost’,sans-serif;font-size:10px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:#0A1628;text-decoration:none;cursor:pointer;transition:background .3s,color .3s;background:transparent;}
+.btn-outline:hover{background:#0A1628;color:#E8D5A3;}
+.btn-gold{display:inline-block;background:#C9A84C;padding:14px 32px;font-family:‘Jost’,sans-serif;font-size:10px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:#0A1628;text-decoration:none;cursor:pointer;border:none;transition:background .3s;}
+.btn-gold:hover{background:#E8D5A3;}
+
+/* ── FORM FIELDS (navy bg) ── */
+.field-label{display:block;font-family:‘Jost’,sans-serif;font-size:9px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:#C9A84C;margin-bottom:8px;}
+.field-input-dark{width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(201,168,76,.3);padding:13px 16px;font-family:‘Jost’,sans-serif;font-size:13px;font-weight:300;color:#E8D5A3;outline:none;}
+.field-input-dark::placeholder{color:rgba(232,213,163,.35);}
+.field-input-dark:focus{border-color:#C9A84C;}
+.field-select-dark{width:100%;background:#0A1628;border:1px solid rgba(201,168,76,.3);padding:13px 16px;font-family:‘Jost’,sans-serif;font-size:13px;font-weight:300;color:#E8D5A3;outline:none;appearance:none;}
+.field-select-dark option{background:#0A1628;color:#E8D5A3;}
+.field-textarea-dark{width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(201,168,76,.3);padding:13px 16px;font-family:‘Jost’,sans-serif;font-size:13px;font-weight:300;color:#E8D5A3;outline:none;resize:none;}
+.field-textarea-dark::placeholder{color:rgba(232,213,163,.35);}
+
+/* ── FORM FIELDS (cream bg) ── */
+.field-input-light{width:100%;background:#F5EDE3;border:1px solid #EDD9C8;padding:13px 16px;font-family:‘Jost’,sans-serif;font-size:13px;font-weight:300;color:#3A3028;outline:none;transition:border-color .3s;}
+.field-input-light::placeholder{color:#9A8E84;}
+.field-input-light:focus{border-color:#C9A84C;}
+.field-select-light{width:100%;background:#F5EDE3;border:1px solid #EDD9C8;padding:13px 16px;font-family:‘Jost’,sans-serif;font-size:13px;font-weight:300;color:#3A3028;outline:none;appearance:none;}
+.field-select-light:focus{border-color:#C9A84C;}
+.field-textarea-light{width:100%;background:#F5EDE3;border:1px solid #EDD9C8;padding:13px 16px;font-family:‘Jost’,sans-serif;font-size:13px;font-weight:300;color:#3A3028;outline:none;resize:none;height:110px;transition:border-color .3s;}
+.field-textarea-light:focus{border-color:#C9A84C;}
+.field-textarea-light::placeholder{color:#9A8E84;}
+.field-label-light{display:block;font-family:‘Jost’,sans-serif;font-size:9px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:#C9A84C;margin-bottom:8px;}
+
+.btn-submit-dark{background:#C9A84C;border:none;padding:16px;font-family:‘Jost’,sans-serif;font-size:10px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:#0A1628;cursor:pointer;width:100%;}
+.btn-submit-dark:hover{background:#E8D5A3;}
+.btn-submit-navy{background:#0A1628;border:none;padding:16px;font-family:‘Jost’,sans-serif;font-size:10px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:#C9A84C;cursor:pointer;width:100%;}
+.btn-submit-navy:hover{background:#071020;}
+
+/* ── HERO ── */
+.hero{min-height:100vh;background:#0A1628;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:120px 40px 80px;}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(201,168,76,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,.04) 1px,transparent 1px);background-size:80px 80px;pointer-events:none;}
+.hero-corner{position:absolute;width:60px;height:60px;pointer-events:none;}
+.hero-corner.tl{top:88px;left:40px;border-top:1px solid rgba(201,168,76,.4);border-left:1px solid rgba(201,168,76,.4);}
+.hero-corner.tr{top:88px;right:40px;border-top:1px solid rgba(201,168,76,.4);border-right:1px solid rgba(201,168,76,.4);}
+.hero-corner.bl{bottom:40px;left:40px;border-bottom:1px solid rgba(201,168,76,.4);border-left:1px solid rgba(201,168,76,.4);}
+.hero-corner.br{bottom:40px;right:40px;border-bottom:1px solid rgba(201,168,76,.4);border-right:1px solid rgba(201,168,76,.4);}
+.hero-content{position:relative;text-align:center;max-width:820px;width:100%;}
+.hero-logo{width:min(440px,90vw);height:auto;display:block;margin:0 auto 48px;}
+.hero-rule{width:1px;height:60px;background:linear-gradient(to bottom,transparent,#C9A84C,transparent);margin:0 auto 32px;}
+.hero-tagline{font-family:‘Cormorant Garamond’,Georgia,serif;font-size:clamp(22px,3.5vw,38px);font-weight:300;font-style:italic;color:#E8D5A3;line-height:1.4;margin-bottom:14px;}
+.hero-sub{font-family:‘Jost’,sans-serif;font-size:11px;font-weight:300;letter-spacing:3.5px;text-transform:uppercase;color:#C9A84C;margin-bottom:36px;}
+.hero-form-wrap{background:rgba(255,255,255,.04);border:1px solid rgba(201,168,76,.25);padding:28px 32px;max-width:520px;width:100%;margin:0 auto;}
+.scroll-hint{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;}
+.scroll-hint span{font-family:‘Jost’,sans-serif;font-size:8.5px;letter-spacing:3px;text-transform:uppercase;color:rgba(201,168,76,.5);}
+.scroll-dot{width:1px;height:40px;background:linear-gradient(to bottom,#C9A84C,transparent);animation:scrollPulse 2s ease-in-out infinite;}
+@keyframes scrollPulse{0%,100%{opacity:.3}50%{opacity:1}}
+
+/* ── PILLARS ── */
+.pillars{background:#F5EDE3;border-top:1px solid #EDD9C8;border-bottom:1px solid #EDD9C8;padding:32px 52px;display:flex;justify-content:center;flex-wrap:wrap;}
+.pillar{flex:1;min-width:120px;text-align:center;padding:16px 24px;border-right:1px solid rgba(201,168,76,.2);}
+.pillar:last-child{border-right:none;}
+.pillar-icon{font-size:18px;margin-bottom:10px;display:block;color:#C9A84C;}
+.pillar-label{font-family:‘Jost’,sans-serif;font-size:9px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:#C9A84C;margin-bottom:4px;}
+.pillar-desc{font-family:‘Cormorant Garamond’,Georgia,serif;font-size:14px;font-weight:300;font-style:italic;color:#6B5E52;}
+
+/* ── ABOUT TEASER ── */
+.about-teaser{display:grid;grid-template-columns:1fr 1fr;min-height:600px;}
+.about-visual{background:#0A1628;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;min-height:500px;}
+.visual-quote{position:relative;padding:52px;text-align:center;}
+.visual-quote-mark{font-family:‘Cormorant Garamond’,Georgia,serif;font-size:120px;line-height:.6;color:#C9A84C;opacity:.2;display:block;margin-bottom:24px;}
+.visual-quote-text{font-family:‘Cormorant Garamond’,Georgia,serif;font-size:clamp(20px,2.5vw,32px);font-weight:300;font-style:italic;color:#E8D5A3;line-height:1.5;}
+.visual-quote-attr{margin-top:24px;font-family:‘Jost’,sans-serif;font-size:9.5px;letter-spacing:3px;text-transform:uppercase;color:#C9A84C;}
+.about-text{background:#FFFDF8;padding:80px 64px;display:flex;flex-direction:column;justify-content:center;}
+
+/* ── TIERS ── */
+.tiers-section{background:#0A1628;padding:100px 52px;position:relative;overflow:hidden;}
+.tiers-section::before{content:’’;position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#C9A84C,transparent);}
+.tiers-section::after{content:’’;position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#C9A84C,transparent);}
+.tiers-header{text-align:center;max-width:600px;margin:0 auto 72px;}
+.tiers-header .section-eyebrow{justify-content:center;}
+.tiers-header .section-eyebrow::before{display:none;}
+.tiers-header .section-eyebrow::after{content:’’;width:28px;height:1px;background:#C9A84C;opacity:.5;}
+.tiers-header .section-title{color:#E8D5A3;}
+.tiers-header .section-body{color:rgba(232,213,163,.65);text-align:center;}
+.tiers-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(201,168,76,.15);max-width:1100px;margin:0 auto;}
+.tier-card{background:#071020;padding:44px 32px;position:relative;overflow:hidden;transition:background .4s;}
+.tier-card::before{content:’’;position:absolute;top:0;left:0;right:0;height:2px;background:#C9A84C;transform:scaleX(0);transform-origin:left;transition:transform .4s;}
+.tier-card:hover{background:rgba(201,168,76,.05);}
+.tier-card:hover::before{transform:scaleX(1);}
+.tier-num{font-family:‘Cormorant Garamond’,Georgia,serif;font-size:64px;font-weight:300;color:rgba(201,168,76,.1);line-height:1;margin-bottom:20px;}
+.tier-badge{display:inline-block;border:1px solid #C9A84C;padding:4px 12px;font-family:‘Jost’,sans-serif;font-size:8.5px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:#C9A84C;margin-bottom:18px;}
+.tier-name{font-family:‘Cormorant Garamond’,Georgia,serif;font-size:24px;font-weight:400;color:#E8D5A3;margin-bottom:14px;line-height:1.25;}
+.tier-desc{font-family:‘Jost’,sans-serif;font-size:12px;font-weight:300;line-height:1.7;color:rgba(232,213,163,.6);}
+
+/* ── MEMBERSHIP TEASER ── */
+.membership-teaser-section{background:#F5EDE3;padding:100px 52px;}
+.membership-teaser{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;max-width:1100px;margin:0 auto;}
+.membership-frame{border:1px solid #C9A84C;padding:48px 40px;background:#0A1628;position:relative;}
+.membership-frame::before{content:’’;position:absolute;top:-8px;left:-8px;right:8px;bottom:8px;border:1px solid rgba(201,168,76,.2);pointer-events:none;}
+.membership-frame-title{font-family:‘Cormorant Garamond’,Georgia,serif;font-size:32px;font-weight:400;color:#E8D5A3;margin-bottom:8px;}
+.membership-frame-title em{font-style:italic;color:#C9A84C;}
+.membership-frame-sub{font-family:‘Jost’,sans-serif;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#C9A84C;margin-bottom:28px;}
+.membership-perks{list-style:none;display:flex;flex-direction:column;gap:12px;}
+.membership-perks li{display:flex;align-items:flex-start;gap:12px;font-family:‘Cormorant Garamond’,Georgia,serif;font-size:16px;font-weight:300;color:#E8D5A3;line-height:1.4;}
+.membership-perks li::before{content:‘✦’;color:#C9A84C;font-size:8px;margin-top:5px;flex-shrink:0;}
+
+/* ── PAGE HERO ── */
+.page-hero{background:#0A1628;padding:160px 52px 80px;text-align:center;position:relative;overflow:hidden;}
+.page-hero::after{content:’’;position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#C9A84C,transparent);}
+.page-hero-eyebrow{font-family:‘Jost’,sans-serif;font-size:9px;font-weight:400;letter-spacing:4px;text-transform:uppercase;color:#C9A84C;margin-bottom:20px;}
+.page-hero-title{font-family:‘Cormorant Garamond’,Georgia,serif;font-size:clamp(40px,6vw,78px);font-weight:300;color:#E8D5A3;line-height:1.1;margin-bottom:20px;}
+.page-hero-title em{font-style:italic;color:#C9A84C;}
+.page-hero-rule{width:60px;height:1px;background:#C9A84C;opacity:.5;margin:0 auto;}
+
+/* ── ABOUT PAGE ── */
+.about-story{max-width:780px;margin:0 auto;padding:80px 52px;background:#FFFDF8;}
+.about-story p{font-family:‘Cormorant Garamond’,Georgia,serif;font-size:20px;font-weight:300;line-height:1.9;color:#6B5E52;margin-bottom:24px;}
+.about-story p.lead{font-size:26px;color:#3A3028;font-weight:400;}
+.about-story .pull-quote{margin:48px 0;padding:36px 48px;border-left:2px solid #C9A84C;background:#F7F0E4;}
+.about-story .pull-quote p{font-size:24px;font-style:italic;color:#0A1628;margin-bottom:12px;}
+.about-story .pull-quote cite{font-family:‘Jost’,sans-serif;font-size:9.5px;letter-spacing:2.5px;text-transform:uppercase;color:#C9A84C;font-style:normal;}
+.values-grid{background:#EDD9C8;padding:80px 52px;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;}
+.value-card{background:#F5EDE3;padding:44px 36px;}
+.value-icon{font-size:24px;margin-bottom:18px;display:block;color:#C9A84C;}
+.value-title{font-family:‘Cormorant Garamond’,Georgia,serif;font-size:22px;font-weight:500;color:#0A1628;margin-bottom:10px;}
+.value-text{font-family:‘Jost’,sans-serif;font-size:13px;font-weight:300;line-height:1.75;color:#6B5E52;}
+
+/* ── SIGNUP PAGE ── */
+.signup-page-wrap{padding-top:72px;min-height:100vh;background:#0A1628;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.signup-page-inner{text-align:center;padding:80px 40px;max-width:680px;width:100%;}
+.signup-page-inner .section-title{color:#E8D5A3;}
+.signup-page-inner .section-body{color:rgba(232,213,163,.65);text-align:center;margin-bottom:40px;}
+.signup-page-inner .section-eyebrow{justify-content:center;color:#C9A84C;}
+.signup-page-inner .section-eyebrow::before{display:none;}
+.signup-page-inner .section-eyebrow::after{content:’’;width:28px;height:1px;background:#C9A84C;opacity:.5;}
+.signup-includes{display:flex;flex-direction:column;gap:12px;margin-bottom:44px;text-align:left;}
+.signup-include-item{display:flex;align-items:flex-start;gap:14px;}
+.signup-include-icon{width:28px;height:28px;border:1px solid #C9A84C;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;margin-top:2px;color:#C9A84C;}
+.signup-include-text{font-family:‘Cormorant Garamond’,Georgia,serif;font-size:17px;font-weight:300;line-height:1.5;color:#E8D5A3;}
+.signup-form-box{background:rgba(255,255,255,.04);border:1px solid rgba(201,168,76,.25);padding:28px 32px;width:100%;max-width:520px;margin:0 auto;}
+
+/* ── MEMBERSHIP PAGE ── */
+.membership-hero{background:#0A1628;padding:160px 52px 100px;text-align:center;position:relative;overflow:hidden;}
+.membership-hero::before{content:’’;position:absolute;width:700px;height:700px;border:1px solid rgba(201,168,76,.08);border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;}
+.membership-hero::after{content:’’;position:absolute;width:400px;height:400px;border:1px solid rgba(201,168,76,.12);border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;}
+.lmt-badge{display:inline-flex;align-items:center;gap:10px;border:1px solid rgba(201,168,76,.3);padding:8px 20px;margin-bottom:32px;}
+.lmt-badge span{font-family:‘Jost’,sans-serif;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#C9A84C;}
+.lmt-dot{width:4px;height:4px;border-radius:50%;background:#C9A84C;animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.membership-body{padding:80px 52px;max-width:1100px;margin:0 auto;background:#FFFDF8;}
+.perks-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:72px;}
+.perk-card{border:1px solid rgba(201,168,76,.25);padding:36px 30px;background:#FFFDF8;transition:border-color .3s,transform .3s;}
+.perk-card:hover{border-color:#C9A84C;transform:translateY(-4px);}
+.perk-icon{font-size:28px;margin-bottom:18px;display:block;color:#C9A84C;}
+.perk-title{font-family:‘Cormorant Garamond’,Georgia,serif;font-size:22px;font-weight:500;color:#0A1628;margin-bottom:10px;}
+.perk-text{font-family:‘Jost’,sans-serif;font-size:13px;font-weight:300;line-height:1.75;color:#6B5E52;}
+.invite-form-wrap{background:#0A1628;padding:64px;max-width:680px;margin:0 auto;position:relative;}
+.invite-form-wrap::before{content:’’;position:absolute;top:-1px;left:20px;right:20px;height:2px;background:linear-gradient(90deg,transparent,#C9A84C,transparent);}
+.invite-form-wrap h3{font-family:‘Cormorant Garamond’,Georgia,serif;font-size:36px;font-weight:400;color:#E8D5A3;text-align:center;margin-bottom:8px;}
+.invite-form-wrap h3 em{font-style:italic;color:#C9A84C;}
+.invite-form-wrap>p{font-family:‘Jost’,sans-serif;font-size:12px;font-weight:300;color:rgba(232,213,163,.6);text-align:center;margin-bottom:36px;line-height:1.7;}
+
+/* ── CONTACT PAGE ── */
+.contact-wrap{padding:80px 52px;max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1fr 1.4fr;gap:80px;align-items:start;background:#FFFDF8;}
+.contact-info h2{font-family:‘Cormorant Garamond’,Georgia,serif;font-size:42px;font-weight:400;color:#0A1628;line-height:1.15;margin-bottom:20px;}
+.contact-info h2 em{font-style:italic;color:#C9A84C;}
+.contact-info p{font-family:‘Cormorant Garamond’,Georgia,serif;font-size:18px;font-weight:300;line-height:1.8;color:#6B5E52;margin-bottom:36px;}
+.contact-details{display:flex;flex-direction:column;gap:20px;}
+.contact-detail-item{display:flex;gap:16px;align-items:flex-start;}
+.contact-detail-icon{width:36px;height:36px;border:1px solid rgba(201,168,76,.3);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;background:#F7F0E4;color:#C9A84C;}
+.contact-detail-text label{display:block;font-family:‘Jost’,sans-serif;font-size:9px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:#C9A84C;margin-bottom:3px;}
+.contact-detail-text span{font-family:‘Cormorant Garamond’,Georgia,serif;font-size:17px;font-weight:300;color:#3A3028;}
+
+/* ── PARTNERSHIP PAGE ── */
+.partnership-intro{max-width:780px;margin:0 auto;padding:72px 52px 0;background:#FFFDF8;}
+.partnership-intro p{font-family:‘Cormorant Garamond’,Georgia,serif;font-size:20px;font-weight:300;line-height:1.9;color:#6B5E52;margin-bottom:16px;}
+.partnership-types{background:#EDD9C8;padding:60px 52px;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;}
+.partnership-type-card{background:#F5EDE3;padding:40px 32px;}
+.partnership-type-icon{font-size:22px;display:block;margin-bottom:16px;color:#C9A84C;}
+.partnership-type-title{font-family:‘Cormorant Garamond’,Georgia,serif;font-size:20px;font-weight:500;color:#0A1628;margin-bottom:10px;}
+.partnership-type-text{font-family:‘Jost’,sans-serif;font-size:13px;font-weight:300;line-height:1.75;color:#6B5E52;}
+.partnership-form-section{background:#0A1628;padding:80px 52px;}
+.partnership-form-inner{max-width:680px;margin:0 auto;}
+
+/* ── EVENT PAGE ── */
+.event-intro{max-width:780px;margin:0 auto;padding:72px 52px 52px;background:#FFFDF8;}
+.event-intro p{font-family:‘Cormorant Garamond’,Georgia,serif;font-size:20px;font-weight:300;line-height:1.9;color:#6B5E52;margin-bottom:16px;}
+.event-form-box{max-width:720px;margin:0 auto;border:1px solid rgba(201,168,76,.25);padding:52px;background:#FFFDF8;}
+
+/* ── FOOTER ── */
+footer{background:#071020;padding:60px 52px 32px;border-top:1px solid rgba(201,168,76,.15);}
+.footer-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:52px;padding-bottom:48px;border-bottom:1px solid rgba(201,168,76,.1);margin-bottom:32px;}
+.footer-brand p{font-family:‘Cormorant Garamond’,Georgia,serif;font-size:15px;font-weight:300;font-style:italic;line-height:1.7;color:rgba(232,213,163,.5);margin-top:16px;}
+.footer-col h4{font-family:‘Jost’,sans-serif;font-size:9px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:#C9A84C;margin-bottom:20px;}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.footer-col ul li a{font-family:‘Jost’,sans-serif;font-size:13px;font-weight:300;color:rgba(232,213,163,.5);text-decoration:none;cursor:pointer;transition:color .3s;}
+.footer-col ul li a:hover{color:#E8D5A3;}
+.footer-bottom{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;}
+.footer-bottom p{font-family:‘Jost’,sans-serif;font-size:10px;color:rgba(201,168,76,.35);}
+.footer-social{display:flex;gap:16px;}
+.footer-social a{width:34px;height:34px;border:1px solid rgba(201,168,76,.2);display:flex;align-items:center;justify-content:center;font-size:12px;color:rgba(201,168,76,.5);text-decoration:none;cursor:pointer;transition:border-color .3s,color .3s;}
+.footer-social a:hover{border-color:#C9A84C;color:#C9A84C;}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:36px;right:36px;background:#0A1628;border:1px solid #C9A84C;padding:18px 28px;font-family:‘Cormorant Garamond’,Georgia,serif;font-size:16px;color:#E8D5A3;z-index:9000;transform:translateY(20px);opacity:0;transition:all .5s;pointer-events:none;}
+.toast.show{transform:translateY(0);opacity:1;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+nav{padding:0 28px;}
+.nav-links{display:none;}
+.nav-links.open{display:flex;flex-direction:column;position:fixed;top:72px;left:0;right:0;background:#0A1628;padding:28px;border-bottom:1px solid rgba(201,168,76,.2);z-index:499;}
+.nav-toggle{display:flex;}
+.about-teaser{grid-template-columns:1fr;}
+.about-visual{min-height:300px;}
+.tiers-grid{grid-template-columns:1fr 1fr;}
+.membership-teaser{grid-template-columns:1fr;gap:40px;}
+.membership-teaser-section{padding:60px 28px;}
+.perks-grid{grid-template-columns:1fr 1fr;}
+.contact-wrap{grid-template-columns:1fr;gap:40px;padding:60px 28px;}
+.footer-inner{grid-template-columns:1fr 1fr;gap:36px;}
+.pillars{flex-wrap:wrap;}
+.pillar{min-width:45%;border-right:none;border-bottom:1px solid rgba(201,168,76,.2);}
+.invite-form-wrap{padding:40px 28px;}
+.values-grid{grid-template-columns:1fr;}
+.partnership-types{grid-template-columns:1fr;}
+.partnership-form-section{padding:60px 28px;}
+.event-form-box{padding:32px 24px;}
+.about-text{padding:60px 32px;}
 }
-
-body {
-font-family: ‘Jost’, sans-serif;
-font-weight: 300;
-background: #FFFDF8;
-color: #3A3028;
-overflow-x: hidden;
-cursor: none;
-}
-
-/* ── CURSOR ── */
-.cursor { position:fixed; width:8px; height:8px; background:#C9A84C; border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition:width .3s,height .3s; }
-.cursor-ring { position:fixed; width:32px; height:32px; border:1px solid rgba(201,168,76,.5); border-radius:50%; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:all .18s; }
-.cursor.hover { width:16px; height:16px; background:#E8D5A3; }
-.cursor-ring.hover { width:52px; height:52px; border-color:#C9A84C; }
-
-.page { display:none; min-height:100vh; }
-.page.active { display:block; }
-
-/* ══════════ NAV ══════════ */
-nav {
-position:fixed; top:0; left:0; right:0; z-index:500;
-display:flex; align-items:center; justify-content:space-between;
-padding:0 52px; height:72px;
-background:#0A1628;
-border-bottom:1px solid rgba(201,168,76,.2);
-}
-.nav-logo { font-family:‘Cormorant Garamond’,serif; font-size:18px; font-weight:500; letter-spacing:4px; text-transform:uppercase; color:#E8D5A3; cursor:pointer; text-decoration:none; }
-.nav-logo span { color:#C9A84C; font-style:italic; }
-.nav-links { display:flex; gap:36px; align-items:center; list-style:none; }
-.nav-links a { font-family:‘Jost’,sans-serif; font-size:10px; font-weight:400; letter-spacing:3px; text-transform:uppercase; color:rgba(232,213,163,.65); text-decoration:none; cursor:pointer; transition:color .3s; position:relative; }
-.nav-links a::after { content:’’; position:absolute; bottom:-4px; left:0; right:0; height:1px; background:#C9A84C; transform:scaleX(0); transform-origin:left; transition:transform .3s; }
-.nav-links a:hover, .nav-links a.active { color:#E8D5A3; }
-.nav-links a:hover::after, .nav-links a.active::after { transform:scaleX(1); }
-.nav-cta { border:1px solid #C9A84C !important; padding:9px 20px !important; color:#C9A84C !important; letter-spacing:2.5px !important; transition:background .3s,color .3s !important; }
-.nav-cta:hover { background:#C9A84C !important; color:#0A1628 !important; }
-.nav-cta::after { display:none !important; }
-.nav-toggle { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:8px; }
-.nav-toggle span { display:block; width:22px; height:1px; background:#C9A84C; }
-
-/* ══════════ BUTTONS ══════════ */
-.btn-outline { display:inline-block; margin-top:24px; border:1px solid #3A3028; padding:13px 28px; font-family:‘Jost’,sans-serif; font-size:10px; font-weight:500; letter-spacing:3px; text-transform:uppercase; color:#3A3028; text-decoration:none; cursor:pointer; transition:background .3s,color .3s; background:transparent; }
-.btn-outline:hover { background:#3A3028; color:#E8D5A3; }
-.btn-gold { display:inline-block; background:#C9A84C; padding:14px 32px; font-family:‘Jost’,sans-serif; font-size:10px; font-weight:500; letter-spacing:3px; text-transform:uppercase; color:#0A1628; text-decoration:none; cursor:pointer; border:none; transition:background .3s; }
-.btn-gold:hover { background:#E8D5A3; }
-
-/* ══════════ SECTION LABELS ══════════ */
-.section-eyebrow { font-family:‘Jost’,sans-serif; font-size:9px; font-weight:500; letter-spacing:4px; text-transform:uppercase; color:#C9A84C; margin-bottom:20px; display:flex; align-items:center; gap:14px; }
-.section-eyebrow::before { content:’’; width:28px; height:1px; background:#C9A84C; opacity:.5; }
-.section-title { font-family:‘Cormorant Garamond’,serif; font-size:clamp(32px,3.5vw,52px); font-weight:400; color:#0A1628; line-height:1.15; margin-bottom:24px; }
-.section-title em { font-style:italic; color:#C9A84C; }
-.section-body { font-family:‘Cormorant Garamond’,serif; font-size:18px; font-weight:300; line-height:1.85; color:#6B5E52; margin-bottom:16px; }
-
-/* ══════════ HERO ══════════ */
-.hero {
-min-height:100vh;
-background:#0A1628;
-display:flex; flex-direction:column; align-items:center; justify-content:center;
-position:relative; overflow:hidden; padding:120px 40px 80px;
-}
-.hero-grid { position:absolute; inset:0; background-image:linear-gradient(rgba(201,168,76,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,.04) 1px,transparent 1px); background-size:80px 80px; pointer-events:none; }
-.hero-corner { position:absolute; width:60px; height:60px; pointer-events:none; }
-.hero-corner.tl { top:88px; left:40px; border-top:1px solid rgba(201,168,76,.4); border-left:1px solid rgba(201,168,76,.4); }
-.hero-corner.tr { top:88px; right:40px; border-top:1px solid rgba(201,168,76,.4); border-right:1px solid rgba(201,168,76,.4); }
-.hero-corner.bl { bottom:40px; left:40px; border-bottom:1px solid rgba(201,168,76,.4); border-left:1px solid rgba(201,168,76,.4); }
-.hero-corner.br { bottom:40px; right:40px; border-bottom:1px solid rgba(201,168,76,.4); border-right:1px solid rgba(201,168,76,.4); }
-.hero-content { position:relative; text-align:center; max-width:820px; animation:fadeUp 1.2s ease both; }
-@keyframes fadeUp { from{opacity:0;transform:translateY(40px)} to{opacity:1;transform:translateY(0)} }
-.hero-logo { width:min(440px,90vw); height:auto; display:block; margin:0 auto 48px; }
-.hero-rule { width:1px; height:60px; background:linear-gradient(to bottom,transparent,#C9A84C,transparent); margin:0 auto 32px; }
-.hero-tagline { font-family:‘Cormorant Garamond’,serif; font-size:clamp(22px,3.5vw,38px); font-weight:300; font-style:italic; color:#E8D5A3; line-height:1.4; margin-bottom:14px; }
-.hero-sub { font-family:‘Jost’,sans-serif; font-size:11px; font-weight:300; letter-spacing:3.5px; text-transform:uppercase; color:#C9A84C; opacity:.8; margin-bottom:36px; }
-.hero-embed-wrap { width:100%; display:flex; justify-content:center; }
-.scroll-hint { position:absolute; bottom:40px; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:8px; }
-.scroll-hint span { font-family:‘Jost’,sans-serif; font-size:8.5px; letter-spacing:3px; text-transform:uppercase; color:rgba(201,168,76,.5); }
-.scroll-dot { width:1px; height:40px; background:linear-gradient(to bottom,#C9A84C,transparent); animation:scrollPulse 2s ease-in-out infinite; }
-@keyframes scrollPulse { 0%,100%{opacity:.3} 50%{opacity:1} }
-
-/* ── Hero form container ── */
-.hero-form-box { background:rgba(255,255,255,.05); border:1px solid rgba(201,168,76,.3); padding:24px 28px; max-width:520px; width:100%; }
-.hero-form-box input { flex:1; background:rgba(255,255,255,.07); border:1px solid rgba(201,168,76,.35); border-right:none; padding:15px 18px; font-family:‘Jost’,sans-serif; font-size:12px; font-weight:300; color:#E8D5A3; outline:none; }
-.hero-form-box input::placeholder { color:rgba(232,213,163,.4); }
-.hero-form-box button { background:#C9A84C; border:1px solid #C9A84C; padding:15px 22px; font-family:‘Jost’,sans-serif; font-size:9.5px; font-weight:500; letter-spacing:2.5px; text-transform:uppercase; color:#0A1628; cursor:pointer; white-space:nowrap; }
-.hero-form-box button:hover { background:#E8D5A3; }
-.hero-form-row { display:flex; gap:0; }
-
-/* ══════════ PILLARS ══════════ */
-.pillars { background:#F5EDE3; border-top:1px solid #EDD9C8; border-bottom:1px solid #EDD9C8; padding:32px 52px; display:flex; justify-content:center; gap:0; overflow:hidden; }
-.pillar { flex:1; text-align:center; padding:0 32px; border-right:1px solid rgba(201,168,76,.2); }
-.pillar:last-child { border-right:none; }
-.pillar-icon { font-size:18px; margin-bottom:10px; display:block; color:#C9A84C; }
-.pillar-label { font-family:‘Jost’,sans-serif; font-size:9px; font-weight:500; letter-spacing:3px; text-transform:uppercase; color:#C9A84C; margin-bottom:4px; }
-.pillar-desc { font-family:‘Cormorant Garamond’,serif; font-size:14px; font-weight:300; font-style:italic; color:#6B5E52; }
-
-/* ══════════ ABOUT TEASER ══════════ */
-.about-teaser { display:grid; grid-template-columns:1fr 1fr; min-height:600px; }
-.about-visual { background:#0A1628; position:relative; display:flex; align-items:center; justify-content:center; overflow:hidden; min-height:500px; }
-.visual-quote { position:relative; padding:52px; text-align:center; }
-.visual-quote-mark { font-family:‘Cormorant Garamond’,serif; font-size:120px; line-height:.6; color:#C9A84C; opacity:.25; display:block; margin-bottom:24px; }
-.visual-quote-text { font-family:‘Cormorant Garamond’,serif; font-size:clamp(20px,2.5vw,32px); font-weight:300; font-style:italic; color:#E8D5A3; line-height:1.5; }
-.visual-quote-attr { margin-top:24px; font-family:‘Jost’,sans-serif; font-size:9.5px; letter-spacing:3px; text-transform:uppercase; color:#C9A84C; }
-.about-text { background:#FFFDF8; padding:80px 64px; display:flex; flex-direction:column; justify-content:center; }
-
-/* ══════════ TIERS ══════════ */
-.tiers-section { background:#0A1628; padding:100px 52px; position:relative; overflow:hidden; }
-.tiers-section::before { content:’’; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,#C9A84C,transparent); }
-.tiers-section::after { content:’’; position:absolute; bottom:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,#C9A84C,transparent); }
-.tiers-header { text-align:center; max-width:600px; margin:0 auto 72px; }
-.tiers-header .section-eyebrow { justify-content:center; }
-.tiers-header .section-eyebrow::before { display:none; }
-.tiers-header .section-eyebrow::after { content:’’; width:28px; height:1px; background:#C9A84C; opacity:.5; }
-.tiers-header .section-title { color:#E8D5A3; }
-.tiers-header .section-body { color:rgba(232,213,163,.65); text-align:center; }
-.tiers-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:rgba(201,168,76,.15); max-width:1100px; margin:0 auto; }
-.tier-card { background:#071020; padding:44px 32px; position:relative; transition:background .4s; overflow:hidden; }
-.tier-card::before { content:’’; position:absolute; top:0; left:0; right:0; height:2px; background:#C9A84C; transform:scaleX(0); transform-origin:left; transition:transform .4s; }
-.tier-card:hover { background:rgba(201,168,76,.06); }
-.tier-card:hover::before { transform:scaleX(1); }
-.tier-num { font-family:‘Cormorant Garamond’,serif; font-size:64px; font-weight:300; color:rgba(201,168,76,.12); line-height:1; margin-bottom:20px; }
-.tier-badge { display:inline-block; border:1px solid #C9A84C; padding:4px 12px; font-family:‘Jost’,sans-serif; font-size:8.5px; font-weight:500; letter-spacing:2.5px; text-transform:uppercase; color:#C9A84C; margin-bottom:18px; }
-.tier-name { font-family:‘Cormorant Garamond’,serif; font-size:24px; font-weight:400; color:#E8D5A3; margin-bottom:14px; line-height:1.25; }
-.tier-desc { font-family:‘Jost’,sans-serif; font-size:12px; font-weight:300; line-height:1.7; color:rgba(232,213,163,.6); }
-
-/* ══════════ MEMBERSHIP TEASER ══════════ */
-.membership-teaser-section { background:#F5EDE3; padding:100px 52px; }
-.membership-teaser { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; max-width:1100px; margin:0 auto; }
-.membership-frame { border:1px solid #C9A84C; padding:48px 40px; background:#0A1628; position:relative; }
-.membership-frame::before { content:’’; position:absolute; top:-8px; left:-8px; right:8px; bottom:8px; border:1px solid rgba(201,168,76,.2); pointer-events:none; }
-.membership-frame-title { font-family:‘Cormorant Garamond’,serif; font-size:32px; font-weight:400; color:#E8D5A3; margin-bottom:8px; }
-.membership-frame-title em { font-style:italic; color:#C9A84C; }
-.membership-frame-sub { font-family:‘Jost’,sans-serif; font-size:9px; letter-spacing:3px; text-transform:uppercase; color:#C9A84C; margin-bottom:28px; }
-.membership-perks { list-style:none; display:flex; flex-direction:column; gap:12px; }
-.membership-perks li { display:flex; align-items:flex-start; gap:12px; font-family:‘Cormorant Garamond’,serif; font-size:16px; font-weight:300; color:#E8D5A3; line-height:1.4; }
-.membership-perks li::before { content:‘✦’; color:#C9A84C; font-size:8px; margin-top:5px; flex-shrink:0; }
-
-/* ══════════ NEWSLETTER STRIP ══════════ */
-.newsletter-strip { background:#C9A84C; padding:72px 52px; text-align:center; }
-.newsletter-strip-title { font-family:‘Cormorant Garamond’,serif; font-size:clamp(30px,4vw,52px); font-weight:400; color:#0A1628; margin-bottom:14px; line-height:1.15; }
-.newsletter-strip-title em { font-style:italic; }
-.newsletter-strip-sub { font-family:‘Jost’,sans-serif; font-size:11px; font-weight:300; letter-spacing:2px; text-transform:uppercase; color:rgba(10,22,40,.7); margin-bottom:36px; }
-.strip-form-box { background:#0A1628; border:1px solid rgba(201,168,76,.3); padding:24px 28px; max-width:520px; margin:0 auto; }
-.strip-form-box input { flex:1; background:rgba(255,255,255,.06); border:1px solid rgba(201,168,76,.3); border-right:none; padding:15px 18px; font-family:‘Jost’,sans-serif; font-size:12px; color:#E8D5A3; outline:none; }
-.strip-form-box input::placeholder { color:rgba(232,213,163,.4); }
-.strip-form-box button { background:#C9A84C; border:1px solid #C9A84C; padding:15px 22px; font-family:‘Jost’,sans-serif; font-size:9.5px; font-weight:500; letter-spacing:2.5px; text-transform:uppercase; color:#0A1628; cursor:pointer; white-space:nowrap; }
-.strip-form-row { display:flex; gap:0; }
-
-/* ══════════ PAGE HERO (shared) ══════════ */
-.page-hero { background:#0A1628; padding:160px 52px 80px; text-align:center; position:relative; overflow:hidden; }
-.page-hero::after { content:’’; position:absolute; bottom:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,#C9A84C,transparent); }
-.page-hero-eyebrow { font-family:‘Jost’,sans-serif; font-size:9px; font-weight:400; letter-spacing:4px; text-transform:uppercase; color:#C9A84C; margin-bottom:20px; }
-.page-hero-title { font-family:‘Cormorant Garamond’,serif; font-size:clamp(40px,6vw,78px); font-weight:300; color:#E8D5A3; line-height:1.1; margin-bottom:20px; }
-.page-hero-title em { font-style:italic; color:#C9A84C; }
-.page-hero-rule { width:60px; height:1px; background:#C9A84C; opacity:.5; margin:0 auto; }
-
-/* ══════════ ABOUT PAGE ══════════ */
-.about-story { max-width:780px; margin:0 auto; padding:80px 52px; background:#FFFDF8; }
-.about-story p { font-family:‘Cormorant Garamond’,serif; font-size:20px; font-weight:300; line-height:1.9; color:#6B5E52; margin-bottom:24px; }
-.about-story p.lead { font-size:26px; color:#3A3028; font-weight:400; }
-.about-story .pull-quote { margin:48px 0; padding:36px 48px; border-left:2px solid #C9A84C; background:#F7F0E4; }
-.about-story .pull-quote p { font-size:24px; font-style:italic; color:#0A1628; margin-bottom:12px; }
-.about-story .pull-quote cite { font-family:‘Jost’,sans-serif; font-size:9.5px; letter-spacing:2.5px; text-transform:uppercase; color:#C9A84C; font-style:normal; }
-.values-grid { background:#EDD9C8; padding:80px 52px; display:grid; grid-template-columns:repeat(3,1fr); gap:1px; }
-.value-card { background:#F5EDE3; padding:44px 36px; }
-.value-icon { font-size:24px; margin-bottom:18px; display:block; color:#C9A84C; }
-.value-title { font-family:‘Cormorant Garamond’,serif; font-size:22px; font-weight:500; color:#0A1628; margin-bottom:10px; }
-.value-text { font-family:‘Jost’,sans-serif; font-size:13px; font-weight:300; line-height:1.75; color:#6B5E52; }
-
-/* ══════════ SIGNUP PAGE ══════════ */
-.signup-page-wrap { padding-top:72px; min-height:100vh; background:#0A1628; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative; overflow:hidden; }
-.signup-page-inner { position:relative; text-align:center; padding:80px 40px; max-width:680px; width:100%; }
-.signup-page-inner .section-title { color:#E8D5A3; }
-.signup-page-inner .section-body { color:rgba(232,213,163,.65); text-align:center; margin-bottom:40px; }
-.signup-page-inner .section-eyebrow { justify-content:center; color:#C9A84C; }
-.signup-page-inner .section-eyebrow::before { display:none; }
-.signup-page-inner .section-eyebrow::after { content:’’; width:28px; height:1px; background:#C9A84C; opacity:.5; }
-.signup-includes { display:flex; flex-direction:column; gap:12px; margin-bottom:44px; text-align:left; }
-.signup-include-item { display:flex; align-items:flex-start; gap:14px; }
-.signup-include-icon { width:28px; height:28px; border:1px solid #C9A84C; display:flex; align-items:center; justify-content:center; font-size:12px; flex-shrink:0; margin-top:2px; color:#C9A84C; }
-.signup-include-text { font-family:‘Cormorant Garamond’,serif; font-size:17px; font-weight:300; line-height:1.5; color:#E8D5A3; }
-.signup-embed-box { background:rgba(255,255,255,.04); border:1px solid rgba(201,168,76,.25); padding:28px 32px; width:100%; max-width:520px; margin:0 auto; }
-
-/* signup form fields on navy */
-.signup-embed-box label { display:block; font-family:‘Jost’,sans-serif; font-size:9px; font-weight:500; letter-spacing:2.5px; text-transform:uppercase; color:#C9A84C; margin-bottom:8px; }
-.signup-embed-box input,
-.signup-embed-box select { width:100%; background:rgba(255,255,255,.07); border:1px solid rgba(201,168,76,.25); padding:13px 16px; font-family:‘Jost’,sans-serif; font-size:13px; font-weight:300; color:#E8D5A3; outline:none; appearance:none; }
-.signup-embed-box input::placeholder { color:rgba(232,213,163,.35); }
-.signup-embed-box option { background:#0A1628; color:#E8D5A3; }
-.signup-embed-box button { background:#C9A84C; border:none; padding:16px; font-family:‘Jost’,sans-serif; font-size:10px; font-weight:500; letter-spacing:3px; text-transform:uppercase; color:#0A1628; cursor:pointer; width:100%; }
-.signup-embed-box button:hover { background:#E8D5A3; }
-
-/* ══════════ MEMBERSHIP PAGE ══════════ */
-.membership-hero { background:#0A1628; padding:160px 52px 100px; text-align:center; position:relative; overflow:hidden; }
-.membership-hero::before { content:’’; position:absolute; width:700px; height:700px; border:1px solid rgba(201,168,76,.08); border-radius:50%; top:50%; left:50%; transform:translate(-50%,-50%); pointer-events:none; }
-.membership-hero::after { content:’’; position:absolute; width:400px; height:400px; border:1px solid rgba(201,168,76,.12); border-radius:50%; top:50%; left:50%; transform:translate(-50%,-50%); pointer-events:none; }
-.lmt-badge { display:inline-flex; align-items:center; gap:10px; border:1px solid rgba(201,168,76,.3); padding:8px 20px; margin-bottom:32px; }
-.lmt-badge span { font-family:‘Jost’,sans-serif; font-size:9px; letter-spacing:3px; text-transform:uppercase; color:#C9A84C; }
-.lmt-dot { width:4px; height:4px; border-radius:50%; background:#C9A84C; animation:pulse 2s ease-in-out infinite; }
-@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
-.membership-body { padding:80px 52px; max-width:1100px; margin:0 auto; background:#FFFDF8; }
-.perks-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-bottom:72px; }
-.perk-card { border:1px solid rgba(201,168,76,.25); padding:36px 30px; background:#FFFDF8; transition:border-color .3s,transform .3s; }
-.perk-card:hover { border-color:#C9A84C; transform:translateY(-4px); }
-.perk-icon { font-size:28px; margin-bottom:18px; display:block; color:#C9A84C; }
-.perk-title { font-family:‘Cormorant Garamond’,serif; font-size:22px; font-weight:500; color:#0A1628; margin-bottom:10px; }
-.perk-text { font-family:‘Jost’,sans-serif; font-size:13px; font-weight:300; line-height:1.75; color:#6B5E52; }
-
-/* invite form — navy bg */
-.invite-form-wrap { background:#0A1628; padding:64px; max-width:680px; margin:0 auto; position:relative; }
-.invite-form-wrap::before { content:’’; position:absolute; top:-1px; left:20px; right:20px; height:2px; background:linear-gradient(90deg,transparent,#C9A84C,transparent); }
-.invite-form-wrap h3 { font-family:‘Cormorant Garamond’,serif; font-size:36px; font-weight:400; color:#E8D5A3; text-align:center; margin-bottom:8px; }
-.invite-form-wrap h3 em { font-style:italic; color:#C9A84C; }
-.invite-form-wrap > p { font-family:‘Jost’,sans-serif; font-size:12px; font-weight:300; color:rgba(232,213,163,.6); text-align:center; margin-bottom:36px; line-height:1.7; }
-.invite-form { display:flex; flex-direction:column; gap:14px; }
-.invite-form input,
-.invite-form textarea { background:rgba(255,255,255,.06); border:1px solid rgba(201,168,76,.25); padding:14px 18px; font-family:‘Jost’,sans-serif; font-size:13px; font-weight:300; color:#E8D5A3; outline:none; width:100%; }
-.invite-form input::placeholder,
-.invite-form textarea::placeholder { color:rgba(232,213,163,.3); }
-.invite-form textarea { resize:none; height:100px; }
-.invite-submit { background:#C9A84C; border:none; padding:16px; font-family:‘Jost’,sans-serif; font-size:10px; font-weight:500; letter-spacing:3px; text-transform:uppercase; color:#0A1628; cursor:pointer; width:100%; }
-.invite-submit:hover { background:#E8D5A3; }
-
-/* ══════════ CONTACT PAGE ══════════ */
-.contact-wrap { padding:80px 52px; max-width:1000px; margin:0 auto; display:grid; grid-template-columns:1fr 1.4fr; gap:80px; align-items:start; background:#FFFDF8; }
-.contact-info h2 { font-family:‘Cormorant Garamond’,serif; font-size:42px; font-weight:400; color:#0A1628; line-height:1.15; margin-bottom:20px; }
-.contact-info h2 em { font-style:italic; color:#C9A84C; }
-.contact-info p { font-family:‘Cormorant Garamond’,serif; font-size:18px; font-weight:300; line-height:1.8; color:#6B5E52; margin-bottom:36px; }
-.contact-details { display:flex; flex-direction:column; gap:20px; }
-.contact-detail-item { display:flex; gap:16px; align-items:flex-start; }
-.contact-detail-icon { width:36px; height:36px; border:1px solid rgba(201,168,76,.3); display:flex; align-items:center; justify-content:center; font-size:14px; flex-shrink:0; background:#F7F0E4; color:#C9A84C; }
-.contact-detail-text label { display:block; font-family:‘Jost’,sans-serif; font-size:9px; font-weight:500; letter-spacing:2.5px; text-transform:uppercase; color:#C9A84C; margin-bottom:3px; }
-.contact-detail-text span { font-family:‘Cormorant Garamond’,serif; font-size:17px; font-weight:300; color:#3A3028; }
-.contact-form { display:flex; flex-direction:column; gap:16px; }
-.contact-form label { display:block; font-family:‘Jost’,sans-serif; font-size:9px; font-weight:500; letter-spacing:2.5px; text-transform:uppercase; color:#C9A84C; margin-bottom:8px; }
-.contact-form input,
-.contact-form textarea,
-.contact-form select { width:100%; background:#F5EDE3; border:1px solid #EDD9C8; padding:14px 18px; font-family:‘Jost’,sans-serif; font-size:13px; font-weight:300; color:#3A3028; outline:none; transition:border-color .3s; appearance:none; }
-.contact-form input:focus,
-.contact-form textarea:focus,
-.contact-form select:focus { border-color:#C9A84C; }
-.contact-form textarea { resize:none; height:120px; }
-.contact-submit { background:#0A1628; border:none; padding:16px; font-family:‘Jost’,sans-serif; font-size:10px; font-weight:500; letter-spacing:3px; text-transform:uppercase; color:#C9A84C; cursor:pointer; transition:background .3s; }
-.contact-submit:hover { background:#071020; }
-
-/* ══════════ PARTNERSHIP PAGE ══════════ */
-.partnership-intro { max-width:780px; margin:0 auto; padding:72px 52px 0; background:#FFFDF8; }
-.partnership-intro p { font-family:‘Cormorant Garamond’,serif; font-size:20px; font-weight:300; line-height:1.9; color:#6B5E52; margin-bottom:16px; }
-.partnership-types { background:#EDD9C8; padding:60px 52px; display:grid; grid-template-columns:repeat(3,1fr); gap:1px; }
-.partnership-type-card { background:#F5EDE3; padding:40px 32px; }
-.partnership-type-icon { font-size:22px; display:block; margin-bottom:16px; color:#C9A84C; }
-.partnership-type-title { font-family:‘Cormorant Garamond’,serif; font-size:20px; font-weight:500; color:#0A1628; margin-bottom:10px; }
-.partnership-type-text { font-family:‘Jost’,sans-serif; font-size:13px; font-weight:300; line-height:1.75; color:#6B5E52; }
-.partnership-form-section { background:#0A1628; padding:80px 52px; }
-.partnership-form-inner { max-width:680px; margin:0 auto; }
-.partnership-form-header { text-align:center; margin-bottom:48px; }
-.partnership-form-header .section-eyebrow { justify-content:center; color:#C9A84C; }
-.partnership-form-header .section-eyebrow::before { display:none; }
-.partnership-form-header h2 { font-family:‘Cormorant Garamond’,serif; font-size:38px; font-weight:400; color:#E8D5A3; line-height:1.2; }
-.partnership-form-header h2 em { font-style:italic; color:#C9A84C; }
-/* partnership form fields — navy bg */
-.pf-label { display:block; font-family:‘Jost’,sans-serif; font-size:9px; font-weight:500; letter-spacing:2.5px; text-transform:uppercase; color:#C9A84C; margin-bottom:8px; }
-.pf-input { width:100%; background:rgba(255,255,255,.06); border:1px solid rgba(201,168,76,.25); padding:13px 16px; font-family:‘Jost’,sans-serif; font-size:13px; font-weight:300; color:#E8D5A3; outline:none; appearance:none; }
-.pf-input::placeholder { color:rgba(232,213,163,.3); }
-.pf-input option { background:#0A1628; color:#E8D5A3; }
-.pf-textarea { width:100%; background:rgba(255,255,255,.06); border:1px solid rgba(201,168,76,.25); padding:13px 16px; font-family:‘Jost’,sans-serif; font-size:13px; font-weight:300; color:#E8D5A3; outline:none; resize:none; height:130px; }
-.pf-textarea::placeholder { color:rgba(232,213,163,.3); }
-.pf-submit { background:#C9A84C; border:none; padding:16px; font-family:‘Jost’,sans-serif; font-size:10px; font-weight:500; letter-spacing:3px; text-transform:uppercase; color:#0A1628; cursor:pointer; width:100%; margin-top:4px; }
-.pf-submit:hover { background:#E8D5A3; }
-.pf-fine { font-family:‘Jost’,sans-serif; font-size:10px; font-weight:300; color:rgba(201,168,76,.45); text-align:center; }
-
-/* ══════════ EVENT SUBMIT PAGE ══════════ */
-.event-intro { max-width:780px; margin:0 auto; padding:72px 52px 52px; background:#FFFDF8; }
-.event-intro p { font-family:‘Cormorant Garamond’,serif; font-size:20px; font-weight:300; line-height:1.9; color:#6B5E52; margin-bottom:16px; }
-.event-form-section { background:#FFFDF8; padding:0 52px 80px; }
-.event-form-box { max-width:720px; margin:0 auto; border:1px solid rgba(201,168,76,.25); padding:52px; background:#FFFDF8; }
-/* event form fields — cream bg */
-.ef-label { display:block; font-family:‘Jost’,sans-serif; font-size:9px; font-weight:500; letter-spacing:2.5px; text-transform:uppercase; color:#C9A84C; margin-bottom:8px; }
-.ef-input { width:100%; background:#F5EDE3; border:1px solid #EDD9C8; padding:13px 16px; font-family:‘Jost’,sans-serif; font-size:13px; font-weight:300; color:#3A3028; outline:none; transition:border-color .3s; }
-.ef-input:focus { border-color:#C9A84C; }
-.ef-input::placeholder { color:#9A8E84; }
-.ef-select { width:100%; background:#F5EDE3; border:1px solid #EDD9C8; padding:13px 16px; font-family:‘Jost’,sans-serif; font-size:13px; font-weight:300; color:#3A3028; outline:none; appearance:none; }
-.ef-select:focus { border-color:#C9A84C; }
-.ef-textarea { width:100%; background:#F5EDE3; border:1px solid #EDD9C8; padding:13px 16px; font-family:‘Jost’,sans-serif; font-size:13px; font-weight:300; color:#3A3028; outline:none; resize:none; height:110px; transition:border-color .3s; }
-.ef-textarea:focus { border-color:#C9A84C; }
-.ef-textarea::placeholder { color:#9A8E84; }
-.ef-submit { background:#0A1628; border:none; padding:16px; font-family:‘Jost’,sans-serif; font-size:10px; font-weight:500; letter-spacing:3px; text-transform:uppercase; color:#C9A84C; cursor:pointer; width:100%; }
-.ef-submit:hover { background:#071020; }
-.ef-fine { font-family:‘Jost’,sans-serif; font-size:10px; font-weight:300; color:#9A8E84; text-align:center; }
-
-/* ══════════ FOOTER ══════════ */
-footer { background:#071020; padding:60px 52px 32px; border-top:1px solid rgba(201,168,76,.15); }
-.footer-inner { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:1.5fr 1fr 1fr 1fr; gap:52px; padding-bottom:48px; border-bottom:1px solid rgba(201,168,76,.1); margin-bottom:32px; }
-.footer-brand p { font-family:‘Cormorant Garamond’,serif; font-size:15px; font-weight:300; font-style:italic; line-height:1.7; color:rgba(232,213,163,.5); margin-top:16px; }
-.footer-col h4 { font-family:‘Jost’,sans-serif; font-size:9px; font-weight:500; letter-spacing:3px; text-transform:uppercase; color:#C9A84C; margin-bottom:20px; }
-.footer-col ul { list-style:none; display:flex; flex-direction:column; gap:10px; }
-.footer-col ul li a { font-family:‘Jost’,sans-serif; font-size:13px; font-weight:300; color:rgba(232,213,163,.5); text-decoration:none; cursor:pointer; transition:color .3s; }
-.footer-col ul li a:hover { color:#E8D5A3; }
-.footer-bottom { max-width:1100px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; }
-.footer-bottom p { font-family:‘Jost’,sans-serif; font-size:10px; color:rgba(201,168,76,.35); }
-.footer-social { display:flex; gap:16px; }
-.footer-social a { width:34px; height:34px; border:1px solid rgba(201,168,76,.2); display:flex; align-items:center; justify-content:center; font-size:12px; color:rgba(201,168,76,.5); text-decoration:none; cursor:pointer; transition:border-color .3s,color .3s; }
-.footer-social a:hover { border-color:#C9A84C; color:#C9A84C; }
-
-/* ══════════ TOAST ══════════ */
-.toast { position:fixed; bottom:36px; right:36px; background:#0A1628; border:1px solid #C9A84C; padding:18px 28px; font-family:‘Cormorant Garamond’,serif; font-size:16px; color:#E8D5A3; z-index:9000; transform:translateY(20px); opacity:0; transition:all .5s; pointer-events:none; }
-.toast.show { transform:translateY(0); opacity:1; }
-
-/* ══════════ REVEAL ══════════ */
-.reveal { opacity:0; transform:translateY(30px); transition:opacity .9s,transform .9s; }
-.reveal.visible { opacity:1; transform:translateY(0); }
-.reveal-delay-1 { transition-delay:.1s; }
-.reveal-delay-2 { transition-delay:.2s; }
-.reveal-delay-3 { transition-delay:.3s; }
-
-/* ══════════ RESPONSIVE ══════════ */
-@media (max-width:900px) {
-nav { padding:0 28px; }
-.nav-links { display:none; }
-.nav-links.open { display:flex; flex-direction:column; position:fixed; top:72px; left:0; right:0; background:#0A1628; padding:28px; border-bottom:1px solid rgba(201,168,76,.2); z-index:499; }
-.nav-toggle { display:flex; }
-.about-teaser { grid-template-columns:1fr; }
-.about-visual { min-height:300px; }
-.tiers-grid { grid-template-columns:1fr 1fr; }
-.membership-teaser { grid-template-columns:1fr; gap:40px; }
-.membership-teaser-section { padding:60px 28px; }
-.perks-grid { grid-template-columns:1fr 1fr; }
-.contact-wrap { grid-template-columns:1fr; gap:40px; padding:60px 28px; }
-.footer-inner { grid-template-columns:1fr 1fr; gap:36px; }
-.pillars { flex-wrap:wrap; }
-.pillar { min-width:45%; border-right:none; border-bottom:1px solid rgba(201,168,76,.2); }
-.invite-form-wrap { padding:40px 28px; }
-.values-grid { grid-template-columns:1fr; }
-.partnership-types { grid-template-columns:1fr; }
-.partnership-form-section { padding:60px 28px; }
-.event-form-section { padding:0 28px 60px; }
-.event-form-box { padding:32px 24px; }
-.hero-form-row { flex-direction:column; }
-.strip-form-row { flex-direction:column; }
-}
-@media (max-width:600px) {
-.tiers-grid,.perks-grid { grid-template-columns:1fr; }
-.footer-inner { grid-template-columns:1fr; }
-.footer-bottom { flex-direction:column; gap:16px; text-align:center; }
-.hero { padding:110px 24px 60px; }
-.tiers-section,.newsletter-strip { padding:60px 24px; }
-.about-story { padding:60px 24px; }
-.membership-body { padding:60px 24px; }
-.partnership-intro,.event-intro { padding:52px 24px 32px; }
+@media(max-width:600px){
+.tiers-grid,.perks-grid{grid-template-columns:1fr;}
+.footer-inner{grid-template-columns:1fr;}
+.footer-bottom{flex-direction:column;gap:16px;text-align:center;}
+.hero{padding:110px 24px 60px;}
+.tiers-section{padding:60px 24px;}
+.about-story{padding:60px 24px;}
+.membership-body{padding:60px 24px;}
+.partnership-intro,.event-intro{padding:52px 24px 32px;}
+.event-form-box{padding:24px 16px;}
 }
 </style>
 
 </head>
 <body>
 
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
 <div class="toast" id="toast"></div>
 
 <!-- ══ NAV ══ -->
 
 <nav>
-  <a class="nav-logo" onclick="showPage('home')">Thrive <span>on Leave</span></a>
+  <a class="nav-logo" href="javascript:void(0)" onclick="showPage('home')">Thrive <span>on Leave</span></a>
   <ul class="nav-links" id="navLinks">
-    <li><a onclick="showPage('home')" id="nav-home" class="active">Home</a></li>
-    <li><a onclick="showPage('about')" id="nav-about">About</a></li>
-    <li><a onclick="showPage('membership')" id="nav-membership">LA Moms Thriving</a></li>
-    <li><a onclick="showPage('signup')" id="nav-signup">Newsletter</a></li>
-    <li><a onclick="showPage('contact')" id="nav-contact">Contact</a></li>
-    <li><a onclick="showPage('signup')" class="nav-cta">Join Free</a></li>
+    <li><a href="javascript:void(0)" onclick="showPage('home')" id="nav-home" class="active">Home</a></li>
+    <li><a href="javascript:void(0)" onclick="showPage('about')" id="nav-about">About</a></li>
+    <li><a href="javascript:void(0)" onclick="showPage('membership')" id="nav-membership">LA Moms Thriving</a></li>
+    <li><a href="javascript:void(0)" onclick="showPage('signup')" id="nav-signup">Newsletter</a></li>
+    <li><a href="javascript:void(0)" onclick="showPage('contact')" id="nav-contact">Contact</a></li>
+    <li><a href="javascript:void(0)" onclick="showPage('signup')" class="nav-cta">Join Free</a></li>
   </ul>
   <div class="nav-toggle" id="navToggle" onclick="toggleNav()">
     <span></span><span></span><span></span>
@@ -406,8 +301,6 @@ nav { padding:0 28px; }
 ══════════════════════════════ -->
 
 <div class="page active" id="page-home">
-
-  <!-- Hero -->
 
   <section class="hero">
     <div class="hero-grid"></div>
@@ -447,68 +340,51 @@ nav { padding:0 28px; }
         <path d="M 540 258 L 540 244" stroke="#C9A84C" stroke-width="0.8" opacity="0.5"/><path d="M 540 258 L 526 258" stroke="#C9A84C" stroke-width="0.8" opacity="0.5"/>
       </svg>
       <div class="hero-rule"></div>
-      <p class="hero-tagline">For the mother in the thick of early motherhood —<br/><span style="font-style:normal;color:#C9A84C;font-family:'Cormorant Garamond',serif;font-size:inherit;">a gentle invitation back to yourself.</span></p>
+      <p class="hero-tagline">For the mother in the thick of early motherhood —<br/><span style="font-style:normal;color:#C9A84C;">a gentle invitation back to yourself.</span></p>
       <p class="hero-sub">Community · Culture · Intentional Moments · Los Angeles</p>
-      <div class="hero-embed-wrap">
-  <div class="hero-form-box" style="padding:28px 32px;max-width:520px;width:100%;">
-    <div style="display:flex;flex-direction:column;gap:14px;">
-      <div>
-        <label style="display:block;font-family:'Jost',sans-serif;font-size:9px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:#C9A84C;margin-bottom:8px;">First Name</label>
-        <input id="heroFirst" type="text" placeholder="Your first name"
-          style="width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(201,168,76,.35);padding:13px 16px;font-family:'Jost',sans-serif;font-size:13px;color:#E8D5A3;outline:none;"/>
+      <div style="display:flex;justify-content:center;">
+        <div class="hero-form-wrap">
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            <div><label class="field-label">First Name</label><input id="heroFirst" class="field-input-dark" type="text" placeholder="Your first name"/></div>
+            <div><label class="field-label">Email Address</label><input id="heroEmail" class="field-input-dark" type="email" placeholder="your@email.com"/></div>
+            <div><label class="field-label">Neighborhood</label>
+              <select id="heroNeighborhood" class="field-select-dark">
+                <option value="" disabled selected>Select your area of LA</option>
+                <option value="West Side">West Side (Santa Monica, Venice, Culver City)</option>
+                <option value="East Side">East Side (Silver Lake, Los Feliz, Echo Park)</option>
+                <option value="South Bay">South Bay (Manhattan Beach, Redondo, Torrance)</option>
+                <option value="Valley">Valley (Sherman Oaks, Studio City, Encino)</option>
+                <option value="Central">Central (Koreatown, Mid-City, Baldwin Hills)</option>
+                <option value="DTLA">Eastside (DTLA, Arts District, Boyle Heights)</option>
+                <option value="All of LA">Other / All of LA</option>
+              </select>
+            </div>
+            <div><label class="field-label">I Am A...</label>
+              <select id="heroType" class="field-select-dark">
+                <option value="" disabled selected>Select one</option>
+                <option value="Mom of littles (0–5)">Mom of littles (0–5)</option>
+                <option value="Mom of school-age kids (6–12)">Mom of school-age kids (6–12)</option>
+                <option value="Career woman & mom">Career woman & mom</option>
+                <option value="Entrepreneur & mom">Entrepreneur & mom</option>
+                <option value="Soon-to-be mom">Soon-to-be mom</option>
+                <option value="Aligned woman & supporter">Aligned woman & supporter</option>
+              </select>
+            </div>
+            <button class="btn-submit-dark" onclick="handleHeroSignup()">Join Free →</button>
+            <p style="font-family:'Jost',sans-serif;font-size:9.5px;color:rgba(201,168,76,.5);text-align:center;">Weekly. Curated. Always free. Unsubscribe any time.</p>
+          </div>
+        </div>
       </div>
-      <div>
-        <label style="display:block;font-family:'Jost',sans-serif;font-size:9px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:#C9A84C;margin-bottom:8px;">Email Address</label>
-        <input id="heroEmail" type="email" placeholder="your@email.com"
-          style="width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(201,168,76,.35);padding:13px 16px;font-family:'Jost',sans-serif;font-size:13px;color:#E8D5A3;outline:none;"/>
-      </div>
-      <div>
-        <label style="display:block;font-family:'Jost',sans-serif;font-size:9px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:#C9A84C;margin-bottom:8px;">Neighborhood</label>
-        <select id="heroNeighborhood"
-          style="width:100%;background:rgba(10,22,40,.95);border:1px solid rgba(201,168,76,.35);padding:13px 16px;font-family:'Jost',sans-serif;font-size:13px;color:#E8D5A3;outline:none;appearance:none;">
-          <option value="" disabled selected>Select your area of LA</option>
-          <option value="West Side">West Side (Santa Monica, Venice, Culver City)</option>
-          <option value="East Side">East Side (Silver Lake, Los Feliz, Echo Park)</option>
-          <option value="South Bay">South Bay (Manhattan Beach, Redondo, Torrance)</option>
-          <option value="Valley">Valley (Sherman Oaks, Studio City, Encino)</option>
-          <option value="Central">Central (Koreatown, Mid-City, Baldwin Hills)</option>
-          <option value="DTLA">Eastside (DTLA, Arts District, Boyle Heights)</option>
-          <option value="All of LA">Other / All of LA</option>
-        </select>
-      </div>
-      <div>
-        <label style="display:block;font-family:'Jost',sans-serif;font-size:9px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:#C9A84C;margin-bottom:8px;">I Am A...</label>
-        <select id="heroType"
-          style="width:100%;background:rgba(10,22,40,.95);border:1px solid rgba(201,168,76,.35);padding:13px 16px;font-family:'Jost',sans-serif;font-size:13px;color:#E8D5A3;outline:none;appearance:none;">
-          <option value="" disabled selected>Select one</option>
-          <option value="Mom of littles (0–5)">Mom of littles (0–5)</option>
-          <option value="Mom of school-age kids (6–12)">Mom of school-age kids (6–12)</option>
-          <option value="Career woman & mom">Career woman & mom</option>
-          <option value="Entrepreneur & mom">Entrepreneur & mom</option>
-          <option value="Soon-to-be mom">Soon-to-be mom</option>
-          <option value="Aligned woman & supporter">Aligned woman & supporter</option>
-        </select>
-      </div>
-      <button onclick="handleHeroFullSignup()"
-        style="background:#C9A84C;border:none;padding:16px;font-family:'Jost',sans-serif;font-size:10px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:#0A1628;cursor:pointer;width:100%;margin-top:4px;">
-        Join Free →
-      </button>
-      <p style="font-family:'Jost',sans-serif;font-size:9.5px;color:rgba(201,168,76,.5);text-align:center;">Weekly. Curated. Always free. Unsubscribe any time.</p>
     </div>
-  </div>
-</div>
+    <div class="scroll-hint"><span>Explore</span><div class="scroll-dot"></div></div>
+  </section>
 
-
-  <!-- Pillars -->
-
-  <div class="pillars reveal">
+  <div class="pillars">
     <div class="pillar"><span class="pillar-icon">✦</span><div class="pillar-label">Curated</div><div class="pillar-desc">handpicked, not aggregated</div></div>
     <div class="pillar"><span class="pillar-icon">◈</span><div class="pillar-label">Aligned</div><div class="pillar-desc">for the intentional mother</div></div>
     <div class="pillar"><span class="pillar-icon">❋</span><div class="pillar-label">Accessible</div><div class="pillar-desc">free to high-ticket, always worthy</div></div>
     <div class="pillar"><span class="pillar-icon">◇</span><div class="pillar-label">Community</div><div class="pillar-desc">women who thrive together</div></div>
   </div>
-
-  <!-- About Teaser -->
 
   <div class="about-teaser">
     <div class="about-visual">
@@ -519,35 +395,31 @@ nav { padding:0 28px; }
       </div>
     </div>
     <div class="about-text">
-      <div class="section-eyebrow reveal">Our Story</div>
-      <h2 class="section-title reveal">Built for the woman<br/>who <em>shows up fully.</em></h2>
-      <p class="section-body reveal">Thrive on Leave began with a simple belief: that the city you love doesn't have to become a stranger when you become a mother. Los Angeles is extraordinary — and you deserve to experience all of it.</p>
-      <p class="section-body reveal">Every week, we curate the events, experiences, and moments that align with who you are — not just who you're raising.</p>
-      <button class="btn-outline reveal" onclick="showPage('about')">Read Our Story →</button>
+      <div class="section-eyebrow">Our Story</div>
+      <h2 class="section-title">Built for the woman<br/>who <em>shows up fully.</em></h2>
+      <p class="section-body">Thrive on Leave began with a simple belief: that the city you love doesn't have to become a stranger when you become a mother. Los Angeles is extraordinary — and you deserve to experience all of it.</p>
+      <p class="section-body">Every week, we curate the events, experiences, and moments that align with who you are — not just who you're raising.</p>
+      <button class="btn-outline" onclick="showPage('about')">Read Our Story →</button>
     </div>
   </div>
 
-  <!-- Tiers -->
-
   <section class="tiers-section">
     <div class="tiers-header">
-      <div class="section-eyebrow reveal">How It Works</div>
-      <h2 class="section-title reveal">Four tiers.<br/><em>Every budget. Every woman.</em></h2>
-      <p class="section-body reveal">From free museum mornings to intimate private gatherings — every issue has something for you, wherever you are.</p>
+      <div class="section-eyebrow">How It Works</div>
+      <h2 class="section-title">Four tiers.<br/><em>Every budget. Every woman.</em></h2>
+      <p class="section-body">From free museum mornings to intimate private gatherings — every issue has something for you, wherever you are.</p>
     </div>
     <div class="tiers-grid">
-      <div class="tier-card reveal"><div class="tier-num">I</div><div class="tier-badge">Always Free</div><div class="tier-name">Free Events</div><p class="tier-desc">Complimentary experiences across LA — parks, galleries, markets, and cultural moments that cost nothing but your presence.</p></div>
-      <div class="tier-card reveal reveal-delay-1"><div class="tier-num">II</div><div class="tier-badge">$5 – $50</div><div class="tier-name">Low-Cost Experiences</div><p class="tier-desc">Accessible, elevated — workshops, classes, curated pop-ups, and community events that feel like much more than their price tag.</p></div>
-      <div class="tier-card reveal reveal-delay-2"><div class="tier-num">III</div><div class="tier-badge">$75 – $500+</div><div class="tier-name">High-Ticket Events</div><p class="tier-desc">For when you want to invest in an extraordinary experience. The restaurant opening, the immersive show, the retreat that restores you.</p></div>
-      <div class="tier-card reveal reveal-delay-3"><div class="tier-num">IV</div><div class="tier-badge">By Invitation</div><div class="tier-name">LA Moms Thriving</div><p class="tier-desc">Our private, members-only community. Exclusive gatherings, curated connections, and a circle that lifts every woman in it.</p></div>
+      <div class="tier-card"><div class="tier-num">I</div><div class="tier-badge">Always Free</div><div class="tier-name">Free Events</div><p class="tier-desc">Complimentary experiences across LA — parks, galleries, markets, and cultural moments that cost nothing but your presence.</p></div>
+      <div class="tier-card"><div class="tier-num">II</div><div class="tier-badge">$5 – $50</div><div class="tier-name">Low-Cost Experiences</div><p class="tier-desc">Accessible, elevated — workshops, classes, curated pop-ups, and community events that feel like much more than their price tag.</p></div>
+      <div class="tier-card"><div class="tier-num">III</div><div class="tier-badge">$75 – $500+</div><div class="tier-name">High-Ticket Events</div><p class="tier-desc">For when you want to invest in an extraordinary experience. The restaurant opening, the immersive show, the retreat that restores you.</p></div>
+      <div class="tier-card"><div class="tier-num">IV</div><div class="tier-badge">By Invitation</div><div class="tier-name">LA Moms Thriving</div><p class="tier-desc">Our private, members-only community. Exclusive gatherings, curated connections, and a circle that lifts every woman in it.</p></div>
     </div>
   </section>
 
-  <!-- Membership Teaser -->
-
   <section class="membership-teaser-section">
     <div class="membership-teaser">
-      <div class="reveal">
+      <div>
         <div class="membership-frame">
           <div class="membership-frame-title">LA Moms <em>Thriving</em></div>
           <div class="membership-frame-sub">Invitation Only · Private Community</div>
@@ -561,31 +433,16 @@ nav { padding:0 28px; }
         </div>
       </div>
       <div>
-        <div class="section-eyebrow reveal">The Inner Circle</div>
-        <h2 class="section-title reveal">Not every seat<br/>is for <em>everyone.</em></h2>
-        <p class="section-body reveal">LA Moms Thriving is for the woman who doesn't need convincing — she already lives this way. An invitation-only community where the standard is alignment, not achievement.</p>
-        <p class="section-body reveal">Start with the newsletter. When the time is right, we'll find each other.</p>
-        <button class="btn-outline reveal" onclick="showPage('membership')">Request an Invitation →</button>
+        <div class="section-eyebrow">The Inner Circle</div>
+        <h2 class="section-title">Not every seat<br/>is for <em>everyone.</em></h2>
+        <p class="section-body">LA Moms Thriving is for the woman who doesn't need convincing — she already lives this way. An invitation-only community where the standard is alignment, not achievement.</p>
+        <p class="section-body">Start with the newsletter. When the time is right, we'll find each other.</p>
+        <button class="btn-outline" onclick="showPage('membership')">Request an Invitation →</button>
       </div>
     </div>
   </section>
 
-  <!-- Newsletter Strip -->
-
-  <section class="newsletter-strip">
-    <h2 class="newsletter-strip-title reveal">Your week in LA,<br/><em>beautifully curated.</em></h2>
-    <p class="newsletter-strip-sub reveal">Join the women who never miss a moment</p>
-    <div class="reveal" style="display:flex;justify-content:center;">
-      <div class="strip-form-box">
-        <div class="strip-form-row">
-          <input type="email" id="stripEmail" placeholder="Your email address" onkeydown="if(event.key==='Enter')handleStripSignup()"/>
-          <button onclick="handleStripSignup()">Subscribe →</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-</div><!-- /page-home -->
+</div>
 
 <!-- ══════════════════════════════
      PAGE: ABOUT
@@ -619,7 +476,7 @@ nav { padding:0 28px; }
       <div class="value-card"><span class="value-icon">⬡</span><div class="value-title">Wholeness</div><p class="value-text">You are a mother and a woman and a professional and a dreamer. We honor all of it. None of it gets left at the door.</p></div>
     </div>
     <div style="text-align:center;padding:72px 52px;background:#FFFDF8;">
-      <p style="font-family:'Cormorant Garamond',serif;font-size:18px;color:#6B5E52;margin-bottom:28px;font-style:italic;">Ready to thrive in your city again?</p>
+      <p style="font-family:'Cormorant Garamond',Georgia,serif;font-size:18px;color:#6B5E52;margin-bottom:28px;font-style:italic;">Ready to thrive in your city again?</p>
       <button class="btn-gold" onclick="showPage('signup')">Join the Newsletter — It's Free</button>
     </div>
   </div>
@@ -642,12 +499,12 @@ nav { padding:0 28px; }
         <div class="signup-include-item"><div class="signup-include-icon">◇</div><div class="signup-include-text">A personal opening letter — warm, intentional, written for you</div></div>
         <div class="signup-include-item"><div class="signup-include-icon">✿</div><div class="signup-include-text">LA Moms Thriving previews — a window into our private community</div></div>
       </div>
-      <div class="signup-embed-box">
+      <div class="signup-form-box">
         <div style="display:flex;flex-direction:column;gap:14px;">
-          <div><label>First Name</label><input id="signupFirst" type="text" placeholder="Your first name"/></div>
-          <div><label>Email Address</label><input id="signupEmail" type="email" placeholder="your@email.com"/></div>
-          <div><label>Neighborhood</label>
-            <select id="signupNeighborhood">
+          <div><label class="field-label">First Name</label><input id="signupFirst" class="field-input-dark" type="text" placeholder="Your first name"/></div>
+          <div><label class="field-label">Email Address</label><input id="signupEmail" class="field-input-dark" type="email" placeholder="your@email.com"/></div>
+          <div><label class="field-label">Neighborhood</label>
+            <select id="signupNeighborhood" class="field-select-dark">
               <option value="" disabled selected>Select your area of LA</option>
               <option value="West Side">West Side (Santa Monica, Venice, Culver City)</option>
               <option value="East Side">East Side (Silver Lake, Los Feliz, Echo Park)</option>
@@ -658,8 +515,8 @@ nav { padding:0 28px; }
               <option value="All of LA">Other / All of LA</option>
             </select>
           </div>
-          <div><label>I Am A...</label>
-            <select id="signupType">
+          <div><label class="field-label">I Am A...</label>
+            <select id="signupType" class="field-select-dark">
               <option value="" disabled selected>Select one</option>
               <option value="Mom of littles (0–5)">Mom of littles (0–5)</option>
               <option value="Mom of school-age kids (6–12)">Mom of school-age kids (6–12)</option>
@@ -669,7 +526,7 @@ nav { padding:0 28px; }
               <option value="Aligned woman & supporter">Aligned woman & supporter</option>
             </select>
           </div>
-          <button onclick="handleFullSignup()">Subscribe — It's Free →</button>
+          <button class="btn-submit-dark" onclick="handleSignupPage()">Subscribe — It's Free →</button>
           <p style="font-family:'Jost',sans-serif;font-size:10px;color:rgba(201,168,76,.45);text-align:center;">Weekly delivery. Curated with care. Unsubscribe any time.</p>
         </div>
       </div>
@@ -686,7 +543,7 @@ nav { padding:0 28px; }
     <div class="membership-hero">
       <div class="lmt-badge"><div class="lmt-dot"></div><span>Invitation Only</span><div class="lmt-dot"></div></div>
       <h1 class="page-hero-title">LA Moms <em>Thriving</em></h1>
-      <p style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;font-style:italic;color:#E8D5A3;margin-top:20px;max-width:560px;margin-left:auto;margin-right:auto;line-height:1.6;">A private circle for the mothers who are building extraordinary lives — and want to do it alongside women who understand exactly what that means.</p>
+      <p style="font-family:'Cormorant Garamond',Georgia,serif;font-size:22px;font-weight:300;font-style:italic;color:#E8D5A3;margin-top:20px;max-width:560px;margin-left:auto;margin-right:auto;line-height:1.6;">A private circle for the mothers who are building extraordinary lives — and want to do it alongside women who understand exactly what that means.</p>
       <div class="page-hero-rule" style="margin-top:32px;"></div>
     </div>
     <div class="membership-body">
@@ -706,15 +563,15 @@ nav { padding:0 28px; }
       <div class="invite-form-wrap">
         <h3>Request an <em>Invitation</em></h3>
         <p>LA Moms Thriving opens by invitation only. Share a little about yourself below — if you feel aligned, so do we.</p>
-        <div class="invite-form">
-          <input type="text" placeholder="Your full name"/>
-          <input type="email" placeholder="Email address"/>
-          <input type="text" placeholder="What do you do? (career, business, or both)"/>
-          <textarea placeholder="Tell us in a few sentences: what does thriving look like for you right now?"></textarea>
-          <button class="invite-submit" onclick="handleMembershipRequest()">Submit My Request →</button>
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <input id="inviteName" class="field-input-dark" type="text" placeholder="Your full name"/>
+          <input id="inviteEmail" class="field-input-dark" type="email" placeholder="Email address"/>
+          <input id="inviteOccupation" class="field-input-dark" type="text" placeholder="What do you do? (career, business, or both)"/>
+          <textarea id="inviteThriving" class="field-textarea-dark" style="height:100px;" placeholder="Tell us in a few sentences: what does thriving look like for you right now?"></textarea>
+          <button class="btn-submit-dark" onclick="handleMembershipRequest()">Submit My Request →</button>
         </div>
       </div>
-      <p style="text-align:center;font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:#9A8E84;margin-top:28px;padding-bottom:80px;">Not quite ready for membership? <a onclick="showPage('signup')" style="color:#C9A84C;cursor:pointer;text-decoration:underline;">Start with the free newsletter →</a></p>
+      <p style="text-align:center;font-family:'Cormorant Garamond',Georgia,serif;font-size:15px;font-style:italic;color:#9A8E84;margin-top:28px;padding-bottom:80px;">Not quite ready for membership? <a href="javascript:void(0)" onclick="showPage('signup')" style="color:#C9A84C;text-decoration:underline;">Start with the free newsletter →</a></p>
     </div>
   </div>
 </div>
@@ -737,18 +594,25 @@ nav { padding:0 28px; }
         <div class="contact-details">
           <div class="contact-detail-item"><div class="contact-detail-icon">✉</div><div class="contact-detail-text"><label>Email</label><span>hello@thriveOnLeave.com</span></div></div>
           <div class="contact-detail-item"><div class="contact-detail-icon">◎</div><div class="contact-detail-text"><label>Location</label><span>Los Angeles, California</span></div></div>
-          <div class="contact-detail-item"><div class="contact-detail-icon">◈</div><div class="contact-detail-text"><label>Instagram</label><span>@thriveOnLeave</span></div></div>
-          <div class="contact-detail-item"><div class="contact-detail-icon">✦</div><div class="contact-detail-text"><label>TikTok</label><span>@thriveOnLeave</span></div></div>
+          <div class="contact-detail-item"><div class="contact-detail-icon">◈</div><div class="contact-detail-text"><label>Instagram</label><span>@thriveonleave</span></div></div>
+          <div class="contact-detail-item"><div class="contact-detail-icon">✦</div><div class="contact-detail-text"><label>TikTok</label><span>@thriveonleave</span></div></div>
         </div>
       </div>
-      <div class="contact-form">
-        <div><label>Your Name</label><input type="text" placeholder="Full name"/></div>
-        <div><label>Email</label><input type="email" placeholder="your@email.com"/></div>
-        <div><label>Reason for Reaching Out</label>
-          <select><option disabled selected>Select one</option><option>Brand Partnership Inquiry</option><option>Event Submission</option><option>LA Moms Thriving Membership</option><option>Media / Press</option><option>General Hello</option></select>
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div><label class="field-label-light">Your Name</label><input id="contactName" class="field-input-light" type="text" placeholder="Full name"/></div>
+        <div><label class="field-label-light">Email</label><input id="contactEmail" class="field-input-light" type="email" placeholder="your@email.com"/></div>
+        <div><label class="field-label-light">Reason for Reaching Out</label>
+          <select id="contactReason" class="field-select-light">
+            <option value="" disabled selected>Select one</option>
+            <option>Brand Partnership Inquiry</option>
+            <option>Event Submission</option>
+            <option>LA Moms Thriving Membership</option>
+            <option>Media / Press</option>
+            <option>General Hello</option>
+          </select>
         </div>
-        <div><label>Message</label><textarea placeholder="Tell us what's on your mind..."></textarea></div>
-        <button class="contact-submit" onclick="handleContactSubmit()">Send Message →</button>
+        <div><label class="field-label-light">Message</label><textarea id="contactMessage" class="field-textarea-light" placeholder="Tell us what's on your mind..."></textarea></div>
+        <button class="btn-submit-navy" onclick="handleContactSubmit()">Send Message →</button>
       </div>
     </div>
   </div>
@@ -776,19 +640,19 @@ nav { padding:0 28px; }
     </div>
     <div class="partnership-form-section">
       <div class="partnership-form-inner">
-        <div class="partnership-form-header">
-          <div class="section-eyebrow">Get In Touch</div>
-          <h2>Tell us about <em>your brand.</em></h2>
+        <div style="text-align:center;margin-bottom:48px;">
+          <div class="section-eyebrow" style="justify-content:center;">Get In Touch</div>
+          <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:38px;font-weight:400;color:#E8D5A3;line-height:1.2;">Tell us about <em style="color:#C9A84C;">your brand.</em></h2>
         </div>
         <div style="display:flex;flex-direction:column;gap:16px;">
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-            <div><label class="pf-label">Brand / Company Name</label><input id="pBrandName" class="pf-input" type="text" placeholder="Your brand name"/></div>
-            <div><label class="pf-label">Contact Name</label><input id="pContactName" class="pf-input" type="text" placeholder="Your full name"/></div>
+            <div><label class="field-label">Brand / Company Name</label><input id="pBrandName" class="field-input-dark" type="text" placeholder="Your brand name"/></div>
+            <div><label class="field-label">Contact Name</label><input id="pContactName" class="field-input-dark" type="text" placeholder="Your full name"/></div>
           </div>
-          <div><label class="pf-label">Contact Email</label><input id="pContactEmail" class="pf-input" type="email" placeholder="your@brand.com"/></div>
+          <div><label class="field-label">Contact Email</label><input id="pContactEmail" class="field-input-dark" type="email" placeholder="your@brand.com"/></div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-            <div><label class="pf-label">Type of Partnership</label>
-              <select id="pPartnershipType" class="pf-input">
+            <div><label class="field-label">Type of Partnership</label>
+              <select id="pPartnershipType" class="field-select-dark">
                 <option value="" disabled selected>Select one</option>
                 <option value="Sponsored Content">Sponsored Content</option>
                 <option value="Event Partnership">Event Partnership</option>
@@ -797,8 +661,8 @@ nav { padding:0 28px; }
                 <option value="Multiple / Custom">Multiple / Custom</option>
               </select>
             </div>
-            <div><label class="pf-label">Budget Range</label>
-              <select id="pBudgetRange" class="pf-input">
+            <div><label class="field-label">Budget Range</label>
+              <select id="pBudgetRange" class="field-select-dark">
                 <option value="" disabled selected>Select range</option>
                 <option value="Under $500">Under $500</option>
                 <option value="$500 – $1,500">$500 – $1,500</option>
@@ -808,10 +672,10 @@ nav { padding:0 28px; }
               </select>
             </div>
           </div>
-          <div><label class="pf-label">Target Audience Alignment</label><input id="pAudienceAlignment" class="pf-input" type="text" placeholder="Who is your ideal customer? How do they align with our community?"/></div>
-          <div><label class="pf-label">Tell Us About Your Brand</label><textarea id="pBrandDescription" class="pf-textarea" placeholder="Share your brand story, mission, and why you'd love to partner with Thrive on Leave..."></textarea></div>
-          <button class="pf-submit" onclick="handlePartnership()">Submit Partnership Inquiry →</button>
-          <p class="pf-fine">We review all inquiries and respond within 5 business days.</p>
+          <div><label class="field-label">Target Audience Alignment</label><input id="pAudienceAlignment" class="field-input-dark" type="text" placeholder="Who is your ideal customer? How do they align with our community?"/></div>
+          <div><label class="field-label">Tell Us About Your Brand</label><textarea id="pBrandDescription" class="field-textarea-dark" style="height:130px;" placeholder="Share your brand story, mission, and why you'd love to partner with Thrive on Leave..."></textarea></div>
+          <button class="btn-submit-dark" onclick="handlePartnership()">Submit Partnership Inquiry →</button>
+          <p style="font-family:'Jost',sans-serif;font-size:10px;font-weight:300;color:rgba(201,168,76,.45);text-align:center;">We review all inquiries and respond within 5 business days.</p>
         </div>
       </div>
     </div>
@@ -833,16 +697,16 @@ nav { padding:0 28px; }
       <p>Every event in Thrive on Leave is hand-selected. If you're hosting, organizing, or simply championing something happening in Los Angeles that would genuinely resonate with our community of intentional mothers — we want to hear about it.</p>
       <p>We review every submission. Selection is editorial — not paid — and based entirely on fit with our readers.</p>
     </div>
-    <div class="event-form-section">
+    <div style="background:#FFFDF8;padding:0 52px 80px;">
       <div class="event-form-box">
         <div style="display:flex;flex-direction:column;gap:16px;">
-          <div><label class="ef-label">Event Name</label><input id="eName" class="ef-input" type="text" placeholder="What is the event called?"/></div>
-          <div><label class="ef-label">Event Description</label><textarea id="eDescription" class="ef-textarea" placeholder="Describe the event — what happens, what to expect, who it's for..."></textarea></div>
+          <div><label class="field-label-light">Event Name</label><input id="eName" class="field-input-light" type="text" placeholder="What is the event called?"/></div>
+          <div><label class="field-label-light">Event Description</label><textarea id="eDescription" class="field-textarea-light" placeholder="Describe the event — what happens, what to expect, who it's for..."></textarea></div>
           <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;">
-            <div><label class="ef-label">Date</label><input id="eDate" class="ef-input" type="text" placeholder="e.g. April 5, 2026"/></div>
-            <div><label class="ef-label">Time</label><input id="eTime" class="ef-input" type="text" placeholder="e.g. 10:00 AM"/></div>
-            <div><label class="ef-label">Category</label>
-              <select id="eCategory" class="ef-select">
+            <div><label class="field-label-light">Date</label><input id="eDate" class="field-input-light" type="text" placeholder="e.g. April 5, 2026"/></div>
+            <div><label class="field-label-light">Time</label><input id="eTime" class="field-input-light" type="text" placeholder="e.g. 10:00 AM"/></div>
+            <div><label class="field-label-light">Category</label>
+              <select id="eCategory" class="field-select-light">
                 <option value="" disabled selected>Select</option>
                 <option value="Free">Free</option>
                 <option value="Low-Cost ($5–$50)">Low-Cost ($5–$50)</option>
@@ -850,18 +714,18 @@ nav { padding:0 28px; }
               </select>
             </div>
           </div>
-          <div><label class="ef-label">Location</label><input id="eLocation" class="ef-input" type="text" placeholder="Venue name and neighborhood / area of LA"/></div>
+          <div><label class="field-label-light">Location</label><input id="eLocation" class="field-input-light" type="text" placeholder="Venue name and neighborhood / area of LA"/></div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-            <div><label class="ef-label">Ticket Price</label><input id="eTicketPrice" class="ef-input" type="text" placeholder="e.g. Free, $25, $150"/></div>
-            <div><label class="ef-label">Registration / Ticket Link</label><input id="eRegLink" class="ef-input" type="url" placeholder="https://..."/></div>
+            <div><label class="field-label-light">Ticket Price</label><input id="eTicketPrice" class="field-input-light" type="text" placeholder="e.g. Free, $25, $150"/></div>
+            <div><label class="field-label-light">Registration / Ticket Link</label><input id="eRegLink" class="field-input-light" type="url" placeholder="https://..."/></div>
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-            <div><label class="ef-label">Your Name</label><input id="eSubmitterName" class="ef-input" type="text" placeholder="Full name"/></div>
-            <div><label class="ef-label">Your Email</label><input id="eSubmitterEmail" class="ef-input" type="email" placeholder="your@email.com"/></div>
+            <div><label class="field-label-light">Your Name</label><input id="eSubmitterName" class="field-input-light" type="text" placeholder="Full name"/></div>
+            <div><label class="field-label-light">Your Email</label><input id="eSubmitterEmail" class="field-input-light" type="email" placeholder="your@email.com"/></div>
           </div>
-          <div><label class="ef-label">Why Is This Right for Thrive on Leave?</label><textarea id="eWhyThrive" class="ef-textarea" placeholder="Tell us why this event aligns with our community of intentional mothers in early motherhood..."></textarea></div>
-          <button class="ef-submit" onclick="handleEventSubmit()">Submit Your Event →</button>
-          <p class="ef-fine">All submissions are reviewed editorially. Submission does not guarantee inclusion.</p>
+          <div><label class="field-label-light">Why Is This Right for Thrive on Leave?</label><textarea id="eWhyThrive" class="field-textarea-light" placeholder="Tell us why this event aligns with our community of intentional mothers in early motherhood..."></textarea></div>
+          <button class="btn-submit-navy" onclick="handleEventSubmit()">Submit Your Event →</button>
+          <p style="font-family:'Jost',sans-serif;font-size:10px;color:#9A8E84;text-align:center;">All submissions are reviewed editorially. Submission does not guarantee inclusion.</p>
         </div>
       </div>
     </div>
@@ -875,21 +739,21 @@ nav { padding:0 28px; }
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
-      <div style="font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:#E8D5A3;">Thrive <span style="color:#C9A84C;font-style:italic;">on Leave</span></div>
+      <div style="font-family:'Cormorant Garamond',Georgia,serif;font-size:16px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:#E8D5A3;">Thrive <span style="color:#C9A84C;font-style:italic;">on Leave</span></div>
       <p>The curated guide to Los Angeles — for the mother who refuses to disappear into any single chapter of her life.</p>
     </div>
     <div class="footer-col"><h4>Navigate</h4><ul>
-      <li><a onclick="showPage('home')">Home</a></li>
-      <li><a onclick="showPage('about')">About</a></li>
-      <li><a onclick="showPage('membership')">LA Moms Thriving</a></li>
-      <li><a onclick="showPage('signup')">Newsletter</a></li>
-      <li><a onclick="showPage('contact')">Contact</a></li>
+      <li><a href="javascript:void(0)" onclick="showPage('home')">Home</a></li>
+      <li><a href="javascript:void(0)" onclick="showPage('about')">About</a></li>
+      <li><a href="javascript:void(0)" onclick="showPage('membership')">LA Moms Thriving</a></li>
+      <li><a href="javascript:void(0)" onclick="showPage('signup')">Newsletter</a></li>
+      <li><a href="javascript:void(0)" onclick="showPage('contact')">Contact</a></li>
     </ul></div>
     <div class="footer-col"><h4>Community</h4><ul>
-      <li><a onclick="showPage('signup')">Join Free</a></li>
-      <li><a onclick="showPage('membership')">Request Invitation</a></li>
-      <li><a onclick="showPage('partnership')">Brand Partnerships</a></li>
-      <li><a onclick="showPage('events')">Submit an Event</a></li>
+      <li><a href="javascript:void(0)" onclick="showPage('signup')">Join Free</a></li>
+      <li><a href="javascript:void(0)" onclick="showPage('membership')">Request Invitation</a></li>
+      <li><a href="javascript:void(0)" onclick="showPage('partnership')">Brand Partnerships</a></li>
+      <li><a href="javascript:void(0)" onclick="showPage('events')">Submit an Event</a></li>
     </ul></div>
     <div class="footer-col"><h4>Find Us</h4><ul>
       <li><a href="https://www.instagram.com/thriveonleave?igsh=NTc4MTIwNjQ2YQ%3D%3D&utm_source=qr" target="_blank" rel="noopener">@thriveonleave on Instagram</a></li>
@@ -912,95 +776,157 @@ nav { padding:0 28px; }
 ══════════════════════════════ -->
 
 <script>
-// ── Cursor ──
-const cursor = document.getElementById('cursor'), ring = document.getElementById('cursorRing');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cursor.style.left=mx+'px'; cursor.style.top=my+'px'; });
-(function animRing(){ rx+=(mx-rx)*.12; ry+=(my-ry)*.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(animRing); })();
-document.querySelectorAll('a,button,input,select,textarea').forEach(el => {
-  el.addEventListener('mouseenter',()=>{ cursor.classList.add('hover'); ring.classList.add('hover'); });
-  el.addEventListener('mouseleave',()=>{ cursor.classList.remove('hover'); ring.classList.remove('hover'); });
-});
-
-// ── Subscribe → Google Sheets via Netlify ──
-async function handleSubscribe(data) {
-  try {
-    const res = await fetch('/api/subscribe', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data) });
-    const json = await res.json();
-    if (json.success) showToast('✦   You\'re on the list. Welcome.');
-    else showToast('Something went wrong — please try again.');
-  } catch { showToast('✦   You\'re on the list. Welcome.'); }
-}
-
-function handleHeroSignup() {
-  const el = document.getElementById('heroEmail');
-  const email = el?.value.trim();
-  if (!email||!email.includes('@')) { if(el){el.style.borderColor='rgba(201,100,80,.7)';setTimeout(()=>el.style.borderColor='',1500);} return; }
-  handleSubscribe({ email, source:'hero' }); el.value='';
-}
-
-function handleStripSignup() {
-  const el = document.getElementById('stripEmail');
-  const email = el?.value.trim();
-  if (!email||!email.includes('@')) { if(el){el.style.borderColor='rgba(201,100,80,.7)';setTimeout(()=>el.style.borderColor='',1500);} return; }
-  handleSubscribe({ email, source:'newsletter_strip' }); el.value='';
-}
-
-function handleFullSignup() {
-  const email = document.getElementById('signupEmail')?.value.trim();
-  if (!email||!email.includes('@')) { showToast('Please enter a valid email address.'); return; }
-  handleSubscribe({ firstName:document.getElementById('signupFirst')?.value.trim()||'', email, neighborhood:document.getElementById('signupNeighborhood')?.value||'', subscriberType:document.getElementById('signupType')?.value||'', source:'signup_page' });
-  ['signupFirst','signupEmail','signupNeighborhood','signupType'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
-}
-
-function handlePartnership() {
-  const email = document.getElementById('pContactEmail')?.value.trim();
-  const brand = document.getElementById('pBrandName')?.value.trim();
-  if (!brand) { showToast('Please enter your brand name.'); return; }
-  if (!email||!email.includes('@')) { showToast('Please enter a valid email address.'); return; }
-  fetch('/api/partnership', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ brandName:brand, contactName:document.getElementById('pContactName')?.value.trim(), contactEmail:email, partnershipType:document.getElementById('pPartnershipType')?.value, budgetRange:document.getElementById('pBudgetRange')?.value, audienceAlignment:document.getElementById('pAudienceAlignment')?.value.trim(), brandDescription:document.getElementById('pBrandDescription')?.value.trim() }) }).catch(()=>{});
-  showToast('✦   Inquiry received. We\'ll be in touch within 5 business days.');
-  ['pBrandName','pContactName','pContactEmail','pAudienceAlignment','pBrandDescription'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
-}
-
-function handleEventSubmit() {
-  const name  = document.getElementById('eName')?.value.trim();
-  const email = document.getElementById('eSubmitterEmail')?.value.trim();
-  if (!name)  { showToast('Please enter the event name.'); return; }
-  if (!email||!email.includes('@')) { showToast('Please enter a valid email address.'); return; }
-  fetch('/api/event-submit', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ eventName:name, eventDescription:document.getElementById('eDescription')?.value.trim(), eventDate:document.getElementById('eDate')?.value.trim(), eventTime:document.getElementById('eTime')?.value.trim(), eventLocation:document.getElementById('eLocation')?.value.trim(), eventCategory:document.getElementById('eCategory')?.value, ticketPrice:document.getElementById('eTicketPrice')?.value.trim(), registrationLink:document.getElementById('eRegLink')?.value.trim(), submitterName:document.getElementById('eSubmitterName')?.value.trim(), submitterEmail:email, whyThrive:document.getElementById('eWhyThrive')?.value.trim() }) }).catch(()=>{});
-  showToast('✦   Event submitted. Thank you — we\'ll review and be in touch.');
-  ['eName','eDescription','eDate','eTime','eLocation','eTicketPrice','eRegLink','eSubmitterName','eSubmitterEmail','eWhyThrive'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
-}
-
-// ── Routing ──
+// ── Page routing ──
 function showPage(id) {
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById('page-'+id).classList.add('active');
-  document.querySelectorAll('.nav-links a[id^="nav-"]').forEach(a=>a.classList.remove('active'));
-  const n=document.getElementById('nav-'+id); if(n) n.classList.add('active');
-  document.getElementById('navLinks').classList.remove('open');
-  window.scrollTo({top:0,behavior:'smooth'});
-  setTimeout(checkReveal,100);
+  document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+  var target = document.getElementById('page-' + id);
+  if (target) target.classList.add('active');
+  document.querySelectorAll('.nav-links a[id^="nav-"]').forEach(function(a) { a.classList.remove('active'); });
+  var n = document.getElementById('nav-' + id);
+  if (n) n.classList.add('active');
+  var nl = document.getElementById('navLinks');
+  if (nl) nl.classList.remove('open');
+  window.scrollTo(0, 0);
 }
 
-function toggleNav() { document.getElementById('navLinks').classList.toggle('open'); }
+function toggleNav() {
+  var nl = document.getElementById('navLinks');
+  if (nl) nl.classList.toggle('open');
+}
 
 // ── Toast ──
 function showToast(msg) {
-  const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),3800);
+  var t = document.getElementById('toast');
+  if (!t) return;
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function() { t.classList.remove('show'); }, 3800);
 }
 
-// ── Reveal ──
-function checkReveal() {
-  document.querySelectorAll('.reveal:not(.visible)').forEach(el=>{
-    if(el.getBoundingClientRect().top < window.innerHeight-60) el.classList.add('visible');
+// ── Core submit to Notion via Netlify ──
+function postToNotion(endpoint, data, successMsg) {
+  fetch(endpoint, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  })
+  .then(function(res) { return res.json(); })
+  .then(function(json) {
+    if (json.success) { showToast(successMsg); }
+    else { showToast('Something went wrong — please try again.'); }
+  })
+  .catch(function() { showToast('Something went wrong — please try again.'); });
+}
+
+// ── Hero signup (full form) ──
+function handleHeroSignup() {
+  var email = (document.getElementById('heroEmail') || {}).value;
+  if (!email || !email.trim() || !email.includes('@')) { showToast('Please enter a valid email address.'); return; }
+  postToNotion('/api/subscribe', {
+    firstName: (document.getElementById('heroFirst') || {}).value || '',
+    email: email.trim(),
+    neighborhood: (document.getElementById('heroNeighborhood') || {}).value || '',
+    subscriberType: (document.getElementById('heroType') || {}).value || '',
+    source: 'hero'
+  }, '✦   You\'re on the list. Welcome.');
+  ['heroFirst','heroEmail','heroNeighborhood','heroType'].forEach(function(id) {
+    var el = document.getElementById(id); if (el) el.value = '';
   });
 }
-window.addEventListener('scroll',checkReveal,{passive:true});
-window.addEventListener('load',checkReveal);
-checkReveal();
+
+// ── Newsletter signup page ──
+function handleSignupPage() {
+  var email = (document.getElementById('signupEmail') || {}).value;
+  if (!email || !email.trim() || !email.includes('@')) { showToast('Please enter a valid email address.'); return; }
+  postToNotion('/api/subscribe', {
+    firstName: (document.getElementById('signupFirst') || {}).value || '',
+    email: email.trim(),
+    neighborhood: (document.getElementById('signupNeighborhood') || {}).value || '',
+    subscriberType: (document.getElementById('signupType') || {}).value || '',
+    source: 'signup_page'
+  }, '✦   You\'re on the list. Welcome.');
+  ['signupFirst','signupEmail','signupNeighborhood','signupType'].forEach(function(id) {
+    var el = document.getElementById(id); if (el) el.value = '';
+  });
+}
+
+// ── Membership request ──
+function handleMembershipRequest() {
+  var name  = (document.getElementById('inviteName') || {}).value;
+  var email = (document.getElementById('inviteEmail') || {}).value;
+  if (!name || !name.trim()) { showToast('Please enter your full name.'); return; }
+  if (!email || !email.trim() || !email.includes('@')) { showToast('Please enter a valid email address.'); return; }
+  postToNotion('/api/membership-request', {
+    fullName: name.trim(),
+    email: email.trim(),
+    occupation: (document.getElementById('inviteOccupation') || {}).value || '',
+    thrivingDescription: (document.getElementById('inviteThriving') || {}).value || ''
+  }, '✦   Your request has been received. We\'ll be in touch.');
+  ['inviteName','inviteEmail','inviteOccupation','inviteThriving'].forEach(function(id) {
+    var el = document.getElementById(id); if (el) el.value = '';
+  });
+}
+
+// ── Contact ──
+function handleContactSubmit() {
+  var name  = (document.getElementById('contactName') || {}).value;
+  var email = (document.getElementById('contactEmail') || {}).value;
+  if (!name || !name.trim()) { showToast('Please enter your name.'); return; }
+  if (!email || !email.trim() || !email.includes('@')) { showToast('Please enter a valid email address.'); return; }
+  postToNotion('/api/contact', {
+    name: name.trim(),
+    email: email.trim(),
+    reason: (document.getElementById('contactReason') || {}).value || '',
+    message: (document.getElementById('contactMessage') || {}).value || ''
+  }, '✦   Message sent. We\'ll respond within 48 hours.');
+  ['contactName','contactEmail','contactReason','contactMessage'].forEach(function(id) {
+    var el = document.getElementById(id); if (el) el.value = '';
+  });
+}
+
+// ── Partnership ──
+function handlePartnership() {
+  var brand = (document.getElementById('pBrandName') || {}).value;
+  var email = (document.getElementById('pContactEmail') || {}).value;
+  if (!brand || !brand.trim()) { showToast('Please enter your brand name.'); return; }
+  if (!email || !email.trim() || !email.includes('@')) { showToast('Please enter a valid email address.'); return; }
+  postToNotion('/api/partnership', {
+    brandName: brand.trim(),
+    contactName: (document.getElementById('pContactName') || {}).value || '',
+    contactEmail: email.trim(),
+    partnershipType: (document.getElementById('pPartnershipType') || {}).value || '',
+    budgetRange: (document.getElementById('pBudgetRange') || {}).value || '',
+    audienceAlignment: (document.getElementById('pAudienceAlignment') || {}).value || '',
+    brandDescription: (document.getElementById('pBrandDescription') || {}).value || ''
+  }, '✦   Inquiry received. We\'ll be in touch within 5 business days.');
+  ['pBrandName','pContactName','pContactEmail','pAudienceAlignment','pBrandDescription'].forEach(function(id) {
+    var el = document.getElementById(id); if (el) el.value = '';
+  });
+}
+
+// ── Event submit ──
+function handleEventSubmit() {
+  var name  = (document.getElementById('eName') || {}).value;
+  var email = (document.getElementById('eSubmitterEmail') || {}).value;
+  if (!name || !name.trim()) { showToast('Please enter the event name.'); return; }
+  if (!email || !email.trim() || !email.includes('@')) { showToast('Please enter a valid email address.'); return; }
+  postToNotion('/api/event-submit', {
+    eventName: name.trim(),
+    eventDescription: (document.getElementById('eDescription') || {}).value || '',
+    eventDate: (document.getElementById('eDate') || {}).value || '',
+    eventTime: (document.getElementById('eTime') || {}).value || '',
+    eventLocation: (document.getElementById('eLocation') || {}).value || '',
+    eventCategory: (document.getElementById('eCategory') || {}).value || '',
+    ticketPrice: (document.getElementById('eTicketPrice') || {}).value || '',
+    registrationLink: (document.getElementById('eRegLink') || {}).value || '',
+    submitterName: (document.getElementById('eSubmitterName') || {}).value || '',
+    submitterEmail: email.trim(),
+    whyThrive: (document.getElementById('eWhyThrive') || {}).value || ''
+  }, '✦   Event submitted. Thank you — we\'ll review and be in touch.');
+  ['eName','eDescription','eDate','eTime','eLocation','eTicketPrice','eRegLink','eSubmitterName','eSubmitterEmail','eWhyThrive'].forEach(function(id) {
+    var el = document.getElementById(id); if (el) el.value = '';
+  });
+}
 </script>
 
 </body>
